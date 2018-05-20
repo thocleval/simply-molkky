@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="🖼">
         <div class="wrapper-title">
             <p>{{currentPlayer.name + "'s turn" }}</p>
             <div class="faults-wrapper">
