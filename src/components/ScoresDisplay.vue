@@ -1,10 +1,10 @@
 <template>
     <div class="scroll-view score-display">
-            <div v-for="(player, index) in players" class="wrapper" :class="{ eliminated: player.isEliminated }">
+            <div v-for="(player, index) in players" :key="index" class="wrapper" :class="{ eliminated: player.isEliminated }">
                 <p class="rank"> {{ index + 1 }} </p>
                 <p class="name">{{ player.name }}</p>
                 <div class="faults-wrapper">
-                    <div v-for="indox in [1, 2 ,3]" class="faults" :class=" { x: player.fault >= indox} ">
+                    <div v-for="indox in [1, 2 ,3]" :key="indox" class="faults" :class=" { x: player.fault >= indox} ">
                     </div>
                 </div>
                 <span class="points" >{{player.score}}</span>

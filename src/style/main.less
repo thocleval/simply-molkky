@@ -5,11 +5,18 @@
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	text-transform: uppercase;
+    text-transform: uppercase;
+    box-sizing: border-box;
 }
 
+html {
+    font-size: 15px;
+}
+body {
+    font-size: 1rem;
+}
 html, body {
-	height: 100%;
+    height: 100%;
 }
 
 #app {
@@ -29,14 +36,15 @@ html, body {
 }
 
 :root {
-  font-size: calc(1vw + 1vh + .5vmin);
+//   font-size: calc(1vw + 1vh + .5vmin);
 }
 
 .🖼 {
     display: flex;
     flex-direction: column;
     align-items: center;
-	height: 75vh;
+	max-height: 100vh;
+	min-height: 75vh;
     padding: 2rem;
     border-radius: 3px;
 	width: 24rem;

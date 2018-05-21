@@ -1,8 +1,7 @@
 <template>
-    <p  class="🎳"
-        :class="{ selected: isSelected }"
-        @click="onClick">{{ number }}
-    </p>
+    <div class="🎳" :class="{ selected: isSelected }" @click="onClick">
+        <p class="number">{{ number }}</p>
+    </div>
 </template>
 
 
@@ -10,45 +9,54 @@
 export default {
     props: {
         number: {
-                type: Number,
-                required: true
+            type: Number,
+            required: true
         },
         isSelected: {
-                type: Boolean,
-                required: true
+            type: Boolean,
+            required: true
         }
     },
     methods: {
         onClick: function () {
             this.$emit('pinClicked', this.number);
-      },
+        },
     },
 }
 </script>
 
 <style lang="less">
 .🎳 {
-    height: 4rem;
-    width: 4rem;
-    line-height: 4rem;
+    width: auto;
     border-radius: 50%;
-    margin: 0 0.3rem;
     border: 2px solid #2c3e50;
     background: transparent;
-    transform: perspective(1px) translateZ(0);
+    position: relative;
     transition-property: color background border;
     transition-duration: 0.5s;
     cursor: pointer;
-    text-align: center;
     font-size: 2rem;
     font-weight: 100;
     text-transform: uppercase;
     outline: none;
 
-    &:before {
+    &::before {
+        content: '';
+        padding-top: 100%;
+        display: block;
+    }
+
+    .number {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+    }
+
+    &::after {
         content: "";
         position: absolute;
-        z-index: -1;
         top: 0;
         left: 0;
         right: 0;
@@ -56,13 +64,11 @@ export default {
         border-radius: 50%;
         background-color: rgba(255,255,255,0.4);
         transform: scale(0);
-        transition-property: transform;
-        transition-duration: 0.2s;
-        transition-timing-function: ease-out;
+        transition: transform 0.2s ease;
 	}
 
     &:hover, &:focus, &:active{
-        &:before {
+        &::after {
             transform: scale(1);
         }
     }
@@ -71,7 +77,7 @@ export default {
         opacity: 0.3;
         cursor: not-allowed;
 
-        &:before{
+        &::after {
             display: none;
         }
     }
@@ -79,9 +85,9 @@ export default {
     &.selected {
         background: #2c3e50;
         color: white;
-        border: 2px solid rgba(255,255,255,0.4);
+        border-color: rgba(255, 255, 255, 0.4);
 
-        &:before {
+        &::after {
             background-color: #1b2733;
         }
     }

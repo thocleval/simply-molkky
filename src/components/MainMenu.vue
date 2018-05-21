@@ -28,8 +28,8 @@ h1 {
     font-weight: 100;
 }
 
-.main-menu{
-    height: unset;
+.main-menu {
+	min-height: initial;
 }
 
 </style>

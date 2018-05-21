@@ -1,6 +1,6 @@
 <template>
     <div class="🖼">
-            <div v-for="(player, index) in ranking">
+            <div v-for="(player, index) in ranking" :key="index">
                 <p class="ranking" :class="{ first: index === 0, second: index === 1, third: index === 2 }">
                     <span v-if="index > 2">{{ index + ". " }}</span>
                     {{ player.name }}

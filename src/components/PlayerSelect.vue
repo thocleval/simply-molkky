@@ -1,21 +1,20 @@
 <template>
     <div class="🖼">
-            <h1>Add players</h1>
-            <div class="row">
-                <input class="📝" @keydown.enter="addPlayer" v-model="newPlayerName" placeholder="Player name">
-                <button class="➕" @click="addPlayer"> + </button>
+        <h1>Add players</h1>
+        <div class="row">
+            <input class="📝" @keydown.enter="addPlayer" v-model="newPlayerName" placeholder="Player name">
+            <button class="➕" @click="addPlayer"> + </button>
+        </div>
+        <div class="scroll-view">
+            <div class="player" v-for="(player, index) in players" :key="index">
+                <p>{{ player }}</p>
+                <span @click="removePlayer(index)">X</span>
             </div>
-            <div class="scroll-view">
-                <div class="player" v-for="(player, index) in players">
-                        <p>{{ player }}</p>
-                        <span @click="removePlayer(index)">X</span>
-                </div>
-
-            </div>
-            <div class="row">
-                <button @click="cancel">Cancel</button>
-                <button @click="validate" :class="{ disabled: isDisabled }" >Start game</button>
-            </div>
+        </div>
+        <div class="row">
+            <button @click="cancel">Cancel</button>
+            <button @click="validate" :class="{ disabled: isDisabled }" >Start game</button>
+        </div>
     </div>
 </template>
 
@@ -31,12 +30,12 @@ export default {
     methods: {
         addPlayer () {
             if (this.newPlayerName !== '' && this.players.length < 16){
-                this.players.push(this.newPlayerName.toUpperCase())
-                this.newPlayerName = ''
+                this.players.push(this.newPlayerName.toUpperCase());
+                this.newPlayerName = '';
             }
         },
         removePlayer (index) {
-            this.players.splice(index, 1)
+            this.players.splice(index, 1);
         },
         cancel () {
             this.$emit('goBack');
@@ -48,7 +47,7 @@ export default {
 
     computed: {
         isDisabled: function () {
-            return this.players.length < 2
+            return this.players.length < 2;
         }
     }
 }
@@ -69,10 +68,10 @@ export default {
     margin: 0;
     padding: 0;
     border-left: none;
-    height: 3.8rem;
     width: 3.8rem;
     font-size: 2.5rem;
     font-weight: 100;
+    align-self: stretch;
 }
 
 .player {
@@ -89,18 +88,19 @@ export default {
     padding: 8px 10px;
     text-align: left;
 
-        &:not(:last-child){
-            border-bottom: 1px solid #2c3e50;
-        }
-        p {
-            margin: 0;
-            flex-grow: 1;
-        }
+    &:not(:last-child){
+        border-bottom: 1px solid #2c3e50;
+    }
 
-        span {
-            margin: 0;
-            cursor: pointer;
-        }
+    p {
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    span {
+        margin: 0;
+        cursor: pointer;
+    }
 
 }
 </style>
