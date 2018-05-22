@@ -1,6 +1,6 @@
 <template>
-  <div class="language-switcher">
-    <div class="language-link"
+  <div class="🌐">
+    <div class="🏳️‍🌈"
       v-for="locale in languages"
       :key="locale.id"
       @click="setLocale(locale)"
@@ -40,11 +40,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.language-switcher {
+.🌐 {
   display: flex;
   margin-top: 1.5rem;
 
-  .language-link {
+  .🏳️‍🌈 {
     margin: 0 1rem;
 
     &:not(.is-current) {
