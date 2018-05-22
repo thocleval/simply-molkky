@@ -4,10 +4,11 @@
       <p class="ranking" :class="{ first: index === 0, second: index === 1, third: index === 2 }">
         <span v-if="index > 2">{{ index + ". " }}</span>
         {{ player.name }}
-        <span v-if="index > 0">{{" : " + player.score + " points" }}</span>
+        <span v-if="index > 0"> : {{$t('game.score', {score: player.score})}}</span>
       </p>
     </div>
-    <button @click="goToMainMenu">Finish</button>
+    <button @click="goToMainMenu">{{$t('game.finish')}}</button>
+    <button @click="restart">{{$t('game.restart')}}</button>
   </div>
 </template>
 
@@ -22,6 +23,9 @@ export default {
   methods: {
     goToMainMenu() {
       this.$emit("finish");
+    },
+    restart() {
+      this.$emit("restart");
     }
   }
 };

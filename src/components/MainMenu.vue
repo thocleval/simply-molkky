@@ -1,13 +1,18 @@
 <template>
   <div class="🖼 main-menu">
-    <h1>Simply Mölkky</h1>
-    <button @click="goToPlayerSelect">Start a game</button>
-    <button @click="goToRules">Manage rules</button>
+    <h1>{{$t('main-menu.title')}}</h1>
+    <button @click="goToPlayerSelect">{{$t('main-menu.start')}}</button>
+    <button @click="goToRules">{{$t('main-menu.rules')}}</button>
+    <LanguageSwitcher />
   </div>
 </template>
 
 <script>
+import LanguageSwitcher from './LanguageSwitcher';
 export default {
+  components: {
+    LanguageSwitcher
+  },
   methods: {
     goToPlayerSelect() {
       this.$emit("goToPlayerSelect");

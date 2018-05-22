@@ -1,21 +1,20 @@
 <template>
-    <div class="🖼">
-        <div class="wrapper-title">
-            <p class="turn"><span class="player-name">{{currentPlayer.name}}</span>'s turn</p>
-            <div class="faults-wrapper">
-                <div v-for="index in [1, 2 ,3]" :key="index" class="faults" :class=" { x: currentPlayer.fault >= index} ">
-                </div>
-            </div>
-            <span class="points" >{{currentPlayer.score}}/{{rules.goal}}</span>
+  <div class="🖼">
+    <div class="wrapper-title">
+      <p class="turn" v-html="$t('game.turn', {name: currentPlayer.name})"></p>
+      <div class="faults-wrapper">
+        <div v-for="index in [1, 2 ,3]" :key="index" class="faults" :class=" { x: currentPlayer.fault >= index} ">
         </div>
-
-        <ScoreSelector @validateScore="addScore" />
-
-        <h2>Scores</h2>
-        <ScoresDisplay :players="sortedPlayers"/>
+      </div>
+      <span class="points">{{currentPlayer.score}}/{{rules.goal}}</span>
     </div>
-</template>
 
+    <ScoreSelector @validateScore="addScore" />
+
+    <h2>{{$t('game.scores.title')}}</h2>
+    <ScoresDisplay :players="sortedPlayers"/>
+  </div>
+</template>
 
 <script>
 import ScoreSelector from "./ScoreSelector.vue";
@@ -87,9 +86,13 @@ export default {
           if (this.rules.penalty === "reset") {
             this.currentPlayer.score = this.rules.penaltyResetAmmount;
           } else if (this.rules.penalty === "substract") {
-            this.currentPlayer.score = this.currentPlayer.score - newScore - this.rules.penaltySubstractAmmount;
+            this.currentPlayer.score =
+              this.currentPlayer.score -
+              newScore -
+              this.rules.penaltySubstractAmmount;
           } else if (this.rules.penalty === "excess") {
-            this.currentPlayer.score = this.rules.goal - (this.currentPlayer.score - this.rules.goal);
+            this.currentPlayer.score =
+              this.rules.goal - (this.currentPlayer.score - this.rules.goal);
           }
         }
 

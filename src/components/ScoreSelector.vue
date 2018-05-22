@@ -8,7 +8,7 @@
         :isSelected="selected.includes(number)"
         :number="number"/>
     </div>
-    <button @click="validateScore">{{okMessage}}</button>
+    <button @click="validateScore" v-html="$t(okMessage, {score: currentScore})">{{okMessage}}</button>
   </div>
 </template>
 
@@ -22,8 +22,7 @@ export default {
   },
   data: function() {
     return {
-      selected: [],
-      totalScore: 0
+      selected: []
     };
   },
   computed: {
@@ -36,8 +35,8 @@ export default {
     },
     okMessage: function() {
       return this.currentScore > 0
-        ? "Ok (+" + this.currentScore + ")"
-        : "Missed shot";
+        ? "game.submit.ok"
+        : "game.submit.missed";
     }
   },
   methods: {
@@ -60,7 +59,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import "../style/variables";
 .score-selector {
   width: 100%;
@@ -139,5 +138,9 @@ export default {
       grid-column-start: 5;
     }
   }
+}
+
+button {
+  margin-top: 1.5rem;
 }
 </style>

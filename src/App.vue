@@ -24,6 +24,7 @@
     <FinalScores
         v-if="state === appStates.GAME_FINISHED"
         @finish="reset"
+        @restart="restart"
         :ranking="ranking"
     />
   </div>
@@ -89,6 +90,14 @@ export default {
       this.players = [];
       this.ranking = [];
       this.changeState(this.appStates.MAIN_MENU);
+    },
+    restart() {
+      this.players.forEach(player => {
+        player.score = 0;
+        player.fault = 0;
+        player.isEliminated = false;
+      });
+      this.changeState(this.appStates.GAME_ONGOING);
     }
   }
 };

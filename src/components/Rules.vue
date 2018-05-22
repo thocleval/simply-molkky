@@ -1,66 +1,68 @@
 <template>
   <div class="🖼">
-    <h1>Rules</h1>
+    <h1>{{$t('rules.title')}}</h1>
     <div class="scroll-view">
-      <div class="rule">Score to reach :<input type="number" min="1" max="999" class="number-input" v-model="currentRules.goal">points</div>
+      <div class="rule">{{$t("rules.goal.label")}} <input type="number" min="1" max="999" class="number-input" v-model="currentRules.goal">{{$t("rules.goal.points")}}</div>
 
       <div class="rule">
-        <p class="rule-label">Win condition :</p>
+        <p class="rule-label">{{$t("rules.score.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" name="score" value="higher" id="score-higher" v-model="currentRules.winCondition">
-          <label for="score-higher">Score {{currentRules.goal}} points or more</label>
+          <input type="radio" name="score" id="score-exact" value="exact" v-model="currentRules.winCondition">
+          <label for="score-exact">{{$t("rules.score.exact", {goal: currentRules.goal})}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" checked="checked" name="score" id="score-exact" value="exact" v-model="currentRules.winCondition">
-          <label for="score-exact">Score exactly {{currentRules.goal}} points</label>
+          <input type="radio" name="score" value="higher" id="score-higher" v-model="currentRules.winCondition">
+          <label for="score-higher">{{$t("rules.score.higher", {goal: currentRules.goal})}}</label>
         </div>
       </div>
 
       <div class="rule" :class="{ disabled: isDisabled }" >
-        <p class="rule-label">Penalty for scoring too much :</p>
+        <p class="rule-label">{{$t("rules.penalty.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" checked="checked" name="penalty" value="reset" id="penalty-reset" v-model="currentRules.penalty">
-          <label for="penalty-reset">Score is set back to <input type="number" min="1" max="999" class="number-input" v-model="currentRules.penaltyResetAmmount"></label>
+          <input type="radio" name="penalty" value="reset" id="penalty-reset" v-model="currentRules.penalty">
+          <label for="penalty-reset">{{$t('rules.penalty.reset')}} <input type="number" min="1" max="999" class="number-input" v-model="currentRules.penaltyResetAmmount"></label>
         </div>
         <div class="radio-wrapper">
           <input type="radio" name="penalty" value="excess" id="penalty-excess" v-model="currentRules.penalty">
-          <label for="penalty-excess">Take away excess points (Eg. 56 -> 44)</label>
+          <label for="penalty-excess">{{$t('rules.penalty.excess')}}</label>
         </div>
         <div class="radio-wrapper">
           <input type="radio" name="penalty" value="substract"  id="penalty-substract" v-model="currentRules.penalty">
-          <label for="penalty-substract">Substract <input type="number" min="1" max="999" class="number-input" v-model="currentRules.penaltySubstractAmmount"> points</label>
+          <label for="penalty-substract">{{$t('rules.penalty.substract')}} <input type="number" min="1" max="999" class="number-input" v-model="currentRules.penaltySubstractAmmount"></label>
         </div>
       </div>
+
       <div class="rule">
-        <p class="rule-label">In case of 3 consecutive misses :</p>
+        <p class="rule-label">{{$t("rules.faults.label")}}</p>
         <div class="radio-wrapper">
           <input type="radio" name="faults" value="eliminated" id="faults-eliminated" v-model="currentRules.sanction">
-          <label for="faults-eliminated">The player is eliminated</label>
+          <label for="faults-eliminated">{{$t('rules.faults.eliminated')}}</label>
         </div>
         <div class="radio-wrapper">
           <input type="radio" name="faults" value="reset" id="faults-reset" v-model="currentRules.sanction">
-          <label for="faults-reset">The player's score is reset to 0</label>
+          <label for="faults-reset">{{$t('rules.faults.reset')}}</label>
         </div>
         <div class="radio-wrapper">
           <input type="radio" name="faults" value="nothing" id="faults-nothing" v-model="currentRules.sanction">
-          <label for="faults-nothing">Nothing happens</label>
+          <label for="faults-nothing">{{$t('rules.faults.nothing')}}</label>
         </div>
       </div>
+
       <div class="rule">
-        <p class="rule-label">Zap! If player 1 matches player 2's score :</p>
+        <p class="rule-label">{{$t("rules.zap.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" checked="checked" name="zap" value="nothing" id="zap-nothing" v-model="currentRules.zap">
-          <label for="zap-nothing">Nothing happens</label>
+          <input type="radio" name="zap" value="nothing" id="zap-nothing" v-model="currentRules.zap">
+          <label for="zap-nothing">{{$t("rules.zap.nothing")}}</label>
         </div>
         <div class="radio-wrapper">
           <input type="radio" name="zap" value="half" id="zap-half" v-model="currentRules.zap">
-          <label for="zap-half">Player 2's score is halved</label>
+          <label for="zap-half">{{$t("rules.zap.half")}}</label>
         </div>
       </div>
     </div>
     <div class="row">
-      <button @click="reset">Default</button>
-      <button @click="validate" >Ok</button>
+      <button @click="reset">{{$t('rules.reset')}}</button>
+      <button @click="validate" >{{$t('rules.validate')}}</button>
     </div>
   </div>
 </template>
@@ -109,6 +111,7 @@ export default {
 .rule {
   text-align: left;
   align-self: stretch;
+  margin-top: 1rem;
 
   .rule-label {
     font-size: 1rem;

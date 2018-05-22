@@ -1,0 +1,57 @@
+{
+  "main-menu": {
+    "title": "Simply Mölkky",
+    "start": "Commencer une partie",
+    "rules": "Modifier les règles"
+  },
+  "players": {
+    "title": "Joueurs",
+    "name-placeholder": "Nom du joueur",
+    "cancel": "Annuler",
+    "start": "Jouer"
+  },
+  "game": {
+    "scores": {
+      "title": "Scores"
+    },
+    "turn": "À <span class=\"player-name\">{name}</span> de jouer",
+    "submit": {
+      "missed": "Tir raté",
+      "ok" : "Ok (+{score})"
+    },
+    "score": "{score} points",
+    "finish": "Terminer",
+    "restart": "Recommencer"
+  },
+  "rules": {
+    "title": "Règles du jeu",
+    "reset": "Réinitialiser",
+    "validate": "Ok",
+    "goal": {
+      "label": "Score à atteindre :",
+      "points": "points"
+    },
+    "score": {
+      "label": "Condition de victoire :",
+      "higher": "Atteindre {goal} points ou plus",
+      "exact": "Atteindre exactement {goal} points"
+    },
+    "penalty": {
+      "label": "Penalité en cas de dépassement :",
+      "reset": "Le score retombe à : ",
+      "excess": "Enlève les points en plus (56 -> 44)",
+      "substract": "Enlève des points :"
+    },
+    "faults": {
+      "label": "En cas de 3 ratés consécutifs :",
+      "eliminated": "Le joueur est éliminé",
+      "reset": "Le score du joueur retombe à 0",
+      "nothing": "Il ne se passe rien"
+    },
+    "zap": {
+      "label": "Zap! Si un joueur égalise le score d'un joueur X :",
+      "nothing": "Il ne se passe rien",
+      "half": "Le score du joueur X est divisé par 2"
+    }
+  }
+}
