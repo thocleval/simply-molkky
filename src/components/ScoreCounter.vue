@@ -1,7 +1,7 @@
 <template>
     <div class="🖼">
         <div class="wrapper-title">
-            <p>{{currentPlayer.name + "'s turn" }}</p>
+            <p class="turn"><span class="player-name">{{currentPlayer.name}}</span>'s turn</p>
             <div class="faults-wrapper">
                 <div v-for="index in [1, 2 ,3]" :key="index" class="faults" :class=" { x: currentPlayer.fault >= index} ">
                 </div>
@@ -9,16 +9,8 @@
             <span class="points" >{{currentPlayer.score}}/{{rules.goal}}</span>
         </div>
 
-        <div class="pins">
-            <Pin
-              v-for="number in 12"
-              :key="number"
-              @pinClicked="onPinClick"
-              :isSelected="selected.includes(number)"
-              :number="number"/>
-        </div>
+        <ScoreSelector @validateScore="addScore" />
 
-        <button @click="validateScore">{{okMessage}}</button>
         <h2>Scores</h2>
         <ScoresDisplay :players="sortedPlayers"/>
     </div>
@@ -26,12 +18,12 @@
 
 
 <script>
-import Pin from "./Pin.vue";
+import ScoreSelector from "./ScoreSelector.vue";
 import ScoresDisplay from "./ScoresDisplay.vue";
 
 export default {
   components: {
-    Pin,
+    ScoreSelector,
     ScoresDisplay
   },
 
@@ -53,24 +45,12 @@ export default {
     };
   },
   computed: {
-    currentScore: function() {
-      if (this.selected.length === 1) {
-        return this.selected[0];
-      } else {
-        return this.selected.length;
-      }
-    },
     currentPlayer: function() {
       return this.players[this.playerIndex];
     },
     sortedPlayers: function() {
       let playersCopy = this.players.slice();
       return playersCopy.sort(this.compare);
-    },
-    okMessage: function() {
-      return this.currentScore > 0
-        ? "Ok (+" + this.currentScore + ")"
-        : "Missed shot";
     },
     numberOfRemainingPlayers: function() {
       let number = this.players.length;
@@ -83,19 +63,8 @@ export default {
     }
   },
   methods: {
-    onPinClick(number) {
-      var index = this.selected.indexOf(number);
-      if (index > -1) {
-        this.selected.splice(index, 1);
-      } else {
-        this.selected.push(number);
-      }
-    },
-    resetScore() {
-      this.selected = [];
-    },
-    validateScore() {
-      if (this.currentScore === 0 && this.rules.sanction !== "nothing") {
+    addScore(newScore) {
+      if (newScore === 0 && this.rules.sanction !== "nothing") {
         this.currentPlayer.fault += 1;
         if (this.currentPlayer.fault === 3) {
           if (this.rules.sanction === "eliminated") {
@@ -111,20 +80,16 @@ export default {
         }
       } else {
         this.currentPlayer.fault = 0;
-        this.currentPlayer.score += this.currentScore;
+        this.currentPlayer.score += newScore;
         if (this.currentPlayer.score === eval(this.rules.goal)) {
           this.$emit("finishGame", this.sortedPlayers);
         } else if (this.currentPlayer.score > this.rules.goal) {
           if (this.rules.penalty === "reset") {
             this.currentPlayer.score = this.rules.penaltyResetAmmount;
           } else if (this.rules.penalty === "substract") {
-            this.currentPlayer.score =
-              this.currentPlayer.score -
-              this.currentScore -
-              this.rules.penaltySubstractAmmount;
+            this.currentPlayer.score = this.currentPlayer.score - newScore - this.rules.penaltySubstractAmmount;
           } else if (this.rules.penalty === "excess") {
-            this.currentPlayer.score =
-              this.rules.goal - (this.currentPlayer.score - this.rules.goal);
+            this.currentPlayer.score = this.rules.goal - (this.currentPlayer.score - this.rules.goal);
           }
         }
 
@@ -144,7 +109,6 @@ export default {
         this.currentPlayer.score = 0;
       }
       this.nextPlayer();
-      this.resetScore();
     },
     nextPlayer() {
       this.playerIndex = (this.playerIndex + 1) % this.players.length;
@@ -162,90 +126,19 @@ export default {
 </script>
 
 <style lang="less">
+@import "../style/variables";
 
-.pins {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-  grid-gap: 10px;
-  width: 100%;
-
-  .🎳 {
-    margin-top: -15%;
-    width: auto;
-    grid-column-end: span 2;
-    grid-row-end: span 2;
-
-    &:nth-child(7),
-    &:nth-child(9),
-    &:nth-child(8) {
-      grid-row-start: 1;
-    }
-    &:nth-child(7) {
-      grid-column-start: 2;
-    }
-    &:nth-child(9) {
-      grid-column-start: 4;
-    }
-    &:nth-child(8) {
-      grid-column-start: 6;
-    }
-
-    &:nth-child(5),
-    &:nth-child(11),
-    &:nth-child(12),
-    &:nth-child(6) {
-      grid-row-start: 3;
-    }
-    &:nth-child(5) {
-      grid-column-start: 1;
-    }
-    &:nth-child(11) {
-      grid-column-start: 3;
-    }
-    &:nth-child(12) {
-      grid-column-start: 5;
-    }
-    &:nth-child(6) {
-      grid-column-start: 7;
-    }
-
-    &:nth-child(3),
-    &:nth-child(10),
-    &:nth-child(4) {
-      grid-row-start: 5;
-    }
-    &:nth-child(3) {
-      grid-column-start: 2;
-    }
-    &:nth-child(10) {
-      grid-column-start: 4;
-    }
-    &:nth-child(4) {
-      grid-column-start: 6;
-    }
-
-    &:nth-child(1),
-    &:nth-child(2) {
-      grid-row-start: 7;
-    }
-    &:nth-child(1) {
-      grid-column-start: 3;
-    }
-    &:nth-child(2) {
-      grid-column-start: 5;
-    }
+.turn {
+  .player-name {
+    font-weight: bold;
   }
-}
-.pin-row {
-  display: flex;
-  margin: 0;
 }
 
 .wrapper-title {
   display: flex;
   width: 100%;
-  padding: 0px 10px 10px 10px;
-  border-bottom: 1px solid #2c3e50;
+  padding: 0 10px 10px 10px;
+  border-bottom: 1px solid @dark-blue;
   margin-bottom: 15px;
   align-items: center;
 
@@ -263,9 +156,10 @@ export default {
     margin-top: 0;
   }
 }
+
 .faults-wrapper {
   display: flex;
-  border-right: 1px solid #2c3e50;
+  border-right: 1px solid @dark-blue;
   padding-right: 0.8rem;
   margin-right: 0.8rem;
 
@@ -279,7 +173,7 @@ export default {
   width: 1rem;
   border-radius: 50%;
   margin: 0 0.1rem;
-  border: 2px solid #2c3e50;
+  border: 2px solid @dark-blue;
   background: transparent;
   transform: perspective(1px) translateZ(0);
   transition-property: color background border;
@@ -290,7 +184,7 @@ export default {
   outline: none;
 
   &.x {
-    background: #2c3e50;
+    background: @dark-blue;
     color: white;
     border: 2px solid rgba(255, 255, 255, 0.4);
   }

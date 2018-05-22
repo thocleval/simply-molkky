@@ -1,132 +1,128 @@
 * {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-    text-transform: uppercase;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-transform: uppercase;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 15px;
+  font-size: 15px;
 }
 body {
-    font-size: 1rem;
+  font-size: 1rem;
 }
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  /* background-image: linear-gradient( 180deg, #5b7f99 35%, #776d7b 55%, #505e82 61%, #265877 74%); */
-  /* background-image: linear-gradient( 180deg, #7898af 35%, #908794 55%, #6575a0 61%, #32759e 74%); */
-  /* background-image: linear-gradient( 180deg, #03014e 0%, #013b83 20%, #92bee7 57%, #b9cbe7 60%, #a0c8e8 100%); */
-  background-image: linear-gradient( 135deg, #FFF886 10%, #F072B6 100%);
+  color: @dark-blue;
+  background-image: linear-gradient(135deg, #fff886 10%, #f072b6 100%);
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-:root {
-//   font-size: calc(1vw + 1vh + .5vmin);
+  padding: 1.5rem;
 }
 
 .🖼 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-	max-height: 100vh;
-	min-height: 75vh;
-    padding: 2rem;
-    border-radius: 3px;
-	width: 24rem;
-    box-shadow: 0px 0px 75px -17px rgba(0,0,0,0.25);
-    background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100%;
+  min-height: 75vh;
+  padding: 2rem;
+  border-radius: 3px;
+  width: 30rem;
+  max-width: 100%;
+  box-shadow: 0px 0px 75px -17px rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.3);
 
-	* + * {
-		margin-top: 1rem;
-	//	color: red;
-	}
+  * + * {
+    margin-top: 1rem;
+  }
 }
 
 .row {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 
-	button + button {
-		margin-top: 0;
-		margin-left: 1rem;
-	}
+  button + button {
+    margin-top: 0;
+    margin-left: 1rem;
+  }
 }
 
-button{
-    padding: 1rem;
-    border: 2px solid #2c3e50;
-    width: 80%;
-    background: transparent;
-    transform: perspective(1px) translateZ(0);
-    transition-property: color;
+button {
+  padding: 1rem;
+  border: 2px solid @dark-blue;
+  width: 80%;
+  background: transparent;
+  transform: perspective(1px) translateZ(0);
+  transition-property: color;
+  transition-duration: 0.2s;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  outline: none;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    transition-property: transform;
     transition-duration: 0.2s;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    outline: none;
+    transition-timing-function: ease-out;
+  }
 
+  &:hover,
+  &:focus,
+  &:active {
     &:before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(255,255,255,0.4);
-        transform: scale(0);
-        transition-property: transform;
-        transition-duration: 0.2s;
-        transition-timing-function: ease-out;
-	}
-
-    &:hover, &:focus, &:active{
-        &:before {
-            transform: scale(1);
-        }
+      transform: scale(1);
     }
+  }
 }
 
 .disabled {
-
   pointer-events: none;
-	opacity: 0.3;
-	cursor: not-allowed;
+  opacity: 0.3;
+  cursor: not-allowed;
 
-	&:before{
-		display: none;
-	}
+  &:before {
+    display: none;
+  }
 }
 
 .scroll-view {
-    overflow-y: scroll;
-    width: calc(100% - 4px);
-    border: 2px solid #2c3e50;
-	flex: 1 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-     padding: 1rem 0;
+  overflow-y: scroll;
+  width: 100%;
+  border: 2px solid @dark-blue;
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.5rem;
 
-	.row {
-		align-self: center;
-		width: 80%;
-	}
+  .row {
+    align-self: center;
+    width: 100%;
+  }
 }
