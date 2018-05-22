@@ -12,7 +12,6 @@
   </div>
 </template>
 
-
 <script>
 import Pin from "./Pin.vue";
 

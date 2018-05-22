@@ -23,7 +23,7 @@ npm run unit
 # run all tests
 npm test
 ```
-## //TODO
+## // TODO
 
  - Add transition animations between states;
  - Fix broken english;
