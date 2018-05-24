@@ -8,7 +8,8 @@
     "title": "Add players",
     "name-placeholder": "Player name",
     "cancel": "Cancel",
-    "start": "Start game"
+    "start": "Start game",
+    "max-players": "Maximum number of players reached"
   },
   "game": {
     "scores": {

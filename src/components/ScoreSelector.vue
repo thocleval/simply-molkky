@@ -67,10 +67,10 @@ export default {
 
 .pins {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-  grid-gap: 10px;
-  width: 100%;
-  padding: 0 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
+  grid-gap: .5rem;
+  max-width: 80%;
+  margin: auto;
 
   .🎳 {
     margin-top: -15%;

@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-view score-display">
-    <div v-for="(player, index) in players" :key="index" class="wrapper" :class="{ eliminated: player.isEliminated }">
+    <div v-for="(player, index) in ranking" :key="index" class="wrapper" :class="{ eliminated: player.isEliminated }">
       <p class="rank"> {{ index + 1 }} </p>
       <p class="name">{{ player.name }}</p>
       <div class="faults-wrapper">
@@ -13,12 +13,11 @@
 
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  props: {
-    players: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapGetters('game', ['ranking']),
   }
 };
 </script>
@@ -29,42 +28,47 @@ export default {
 .wrapper {
   display: flex;
   width: 100%;
-  padding: 1rem 1rem;
-  border-bottom: 1px solid @dark-blue;
+  padding: @spacing-small 0;
   align-items: center;
-  height: 50px;
 
-  &:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+  &:not(:last-child) {
+    border-bottom: 1px solid @dark-blue;
   }
 
   .rank {
     flex-grow: 0;
     border-right: 1px solid @dark-blue;
-    padding-right: 10px;
-    margin-right: 10px;
+    padding-right: @spacing-small;
+    margin-right: @spacing-small;
   }
 
   .name {
     text-align: left;
-    flex-grow: 1;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .faults-wrapper {
+
   }
 
   .faults {
-    height: 8px;
-    width: 8px;
+    height: .8rem;
+    width: .8rem;
     margin: 0 2px;
+    border-width: 1px;
   }
 
   .points {
-    width: 1.1rem;
-    font-size: 1.3rem;
+    width: 1.5rem;
+    font-size: 1.7rem;
     text-align: right;
   }
 
   &.eliminated {
-    color: red;
+    color: @error-color;
   }
 
   * + * {

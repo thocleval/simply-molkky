@@ -1,53 +1,56 @@
 <template>
   <div class="🖼">
-    <h1>{{$t('players.title')}}</h1>
-    <form class="row" @submit.prevent="addPlayer">
+    <h1 class="main-title">{{$t('players.title')}}</h1>
+    <form class="row" @submit.prevent="onAddPlayer" v-if="canAddPlayers">
       <input class="📝" v-model="newPlayerName" :placeholder="$t('players.name-placeholder')">
       <button class="➕" type="submit"> + </button>
     </form>
+    <p class="max-players" v-if="!canAddPlayers">{{$t('players.max-players')}}</p>
     <div class="scroll-view">
       <div class="player" v-for="(player, index) in players" :key="index">
-        <p class="name">{{ player }}</p>
-        <span @click="removePlayer(index)" class="remove">X</span>
+        <p class="name">{{ player.name }}</p>
+        <span @click="removePlayer(index)" class="remove"><i class="icon-cross"></i></span>
       </div>
     </div>
     <div class="row">
       <button @click="cancel">{{$t('players.cancel')}}</button>
-      <button @click="validate" :class="{ disabled: isDisabled }" >{{$t('players.start')}}</button>
+      <button @click="validate" :class="{ disabled: isValidateDisabled }" >{{$t('players.start')}}</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters } from 'vuex';
+
 export default {
   data: function() {
     return {
-      newPlayerName: "",
-      players: []
+      newPlayerName: ''
     };
   },
-
-  methods: {
-    addPlayer() {
-      if (this.newPlayerName !== "" && this.players.length < 16) {
-        this.players.push(this.newPlayerName.toUpperCase());
-        this.newPlayerName = "";
-      }
-    },
-    removePlayer(index) {
-      this.players.splice(index, 1);
-    },
-    cancel() {
-      this.$emit("goBack");
-    },
-    validate() {
-      this.$emit("startGame", this.players);
+  computed: {
+    ...mapState('game', ['players']),
+    ...mapGetters('game', ['canAddPlayers']),
+    isValidateDisabled: function() {
+      return this.players.length < 2;
     }
   },
-
-  computed: {
-    isDisabled: function() {
-      return this.players.length < 2;
+  methods: {
+    ...mapActions('game', ['addPlayer', 'removePlayer']),
+    onAddPlayer() {
+      if (!this.canAddPlayers) {
+        return;
+      }
+      if (this.newPlayerName !== '') {
+        this.addPlayer(this.newPlayerName);
+        this.newPlayerName = '';
+      }
+    },
+    cancel() {
+      this.$emit('goBack');
+    },
+    validate() {
+      this.$emit('startGame');
     }
   }
 };
@@ -57,21 +60,26 @@ export default {
 @import "../style/variables";
 
 .📝 {
-  padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.5);
+  padding: @spacing-small;
+  background: fade(@white, 50%);
   border: 2px solid @dark-blue;
   outline: none;
   flex-grow: 1;
 }
 
 .➕ {
+  align-self: stretch;
+  width: 5rem;
   margin: 0;
   padding: 0;
   border-left: none;
-  width: 3.8rem;
-  font-size: 2.5rem;
-  font-weight: 100;
-  align-self: stretch;
+  font-size: 4rem;
+  font-weight: @light-weight;
+}
+
+.max-players {
+  padding: @spacing-small 0;
+  text-align: center;
 }
 
 .player {
@@ -80,6 +88,7 @@ export default {
   align-items: center;
   margin: 0;
   width: 100%;
+  flex-shrink: 0;
 
   &:not(:last-child) {
     border-bottom: 1px solid @dark-blue;
@@ -89,13 +98,14 @@ export default {
     margin: 0;
     flex-grow: 1;
     text-align: left;
-    padding: .8rem 0;
+    padding: @spacing-small 0;
   }
 
   .remove {
     cursor: pointer;
-    padding: .6rem 1rem;
+    padding: .6rem @spacing-small;
     margin: 0;
+    margin-right: -@spacing-small;
   }
 }
 </style>

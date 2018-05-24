@@ -1,7 +1,7 @@
 <template>
-    <div class="🎳" :class="{ selected: isSelected }" @click="onClick">
-        <p class="number">{{ number }}</p>
-    </div>
+    <button type="button" class="🎳" :class="{ selected: isSelected }" @click="onClick">
+      <p class="number">{{ number }}</p>
+    </button>
 </template>
 
 <script>
@@ -28,20 +28,17 @@ export default {
 @import "../style/variables";
 
 .🎳 {
-  width: auto;
   border-radius: 50%;
-  border: 2px solid @dark-blue;
-  background: transparent;
   position: relative;
-  transition-property: color background border;
-  transition-duration: 0.5s;
-  cursor: pointer;
+  transition-property: color background-color border-color;
+  transition-duration: @transition-duration * 2;
+  transition-timing-function: ease;
   font-size: 2rem;
-  font-weight: 100;
-  text-transform: uppercase;
-  outline: none;
+  font-weight: @light-weight;
+  padding: 0;
 
-  &::before {
+  // Square block parent
+  &::after {
     content: "";
     padding-top: 100%;
     display: block;
@@ -55,43 +52,17 @@ export default {
     z-index: 10;
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  &::before {
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.4);
-    transform: scale(0);
-    transition: transform 0.2s ease;
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    &::after {
-      transform: scale(1);
-    }
-  }
-
-  &.disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-
-    &::after {
-      display: none;
-    }
   }
 
   &.selected {
-    background: @dark-blue;
+    background-color: @dark-blue;
     color: white;
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: fade(@white, 40%);
 
-    &::after {
-      background-color: #1b2733;
+    &::before {
+      display: none;
     }
   }
 }

@@ -8,7 +8,8 @@
     "title": "Joueurs",
     "name-placeholder": "Nom du joueur",
     "cancel": "Annuler",
-    "start": "Jouer"
+    "start": "Jouer",
+    "max-players": "Nombre maximum de joueurs atteint"
   },
   "game": {
     "scores": {

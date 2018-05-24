@@ -11,26 +11,29 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue';
+import { mapMutations, mapState } from 'vuex';
 
 const localeStrings = {
-  en: "English",
-  fr: "Français"
+  en: 'English',
+  fr: 'Français'
 };
 
 export default {
   data() {
     return {
-      activeLocale: this.$i18n.locale,
       languages: Vue.config.languages
     };
   },
+  computed: {
+    activeLocale() {
+      return this.$i18n.locale;
+    }
+  },
   methods: {
     setLocale(locale) {
-      Vue.config.lang = locale;
-      this.activeLocale = locale;
-      this.$cookie.set("locale", locale);
       this.$i18n.locale = locale;
+      this.$cookie.set('locale', locale);
     },
     getLanguageString(locale) {
       return localeStrings[locale];
@@ -40,12 +43,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../style/variables';
+
 .🌐 {
   display: flex;
-  margin-top: 1.5rem;
 
   .🏳️‍🌈 {
-    margin: 0 1rem;
+    margin: 0 @spacing-small;
 
     &:not(.is-current) {
       cursor: pointer;

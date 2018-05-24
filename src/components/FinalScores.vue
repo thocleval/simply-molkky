@@ -13,14 +13,14 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
-  props: {
-    ranking: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapGetters('game', ['ranking'])
   },
   methods: {
+    ...mapActions('game', ['resetAllScores']),
     goToMainMenu() {
       this.$emit("finish");
     },

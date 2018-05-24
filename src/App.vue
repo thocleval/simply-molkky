@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :style="gradientBackground(theme)">
     <MainMenu
         v-if="state === appStates.MAIN_MENU"
         @goToPlayerSelect="changeState(appStates.PLAYER_SELECT)"
@@ -7,30 +7,27 @@
     />
     <PlayerSelect
         v-if="state === appStates.PLAYER_SELECT"
-        @startGame="registerPlayers"
-        @goBack="changeState(appStates.MAIN_MENU)"
+        @startGame="startGame"
+        @goBack="goToMainMenu"
     />
     <Rules
         v-if="state === appStates.RULES"
-        :rules="rules"
-        @applyRules="applyRules"
+        @applyRules="goToMainMenu"
     />
     <ScoreCounter
         v-if="state === appStates.GAME_ONGOING"
         @finishGame="finishGame"
-        :rules="rules"
-        :players="players"
     />
     <FinalScores
         v-if="state === appStates.GAME_FINISHED"
-        @finish="reset"
-        @restart="restart"
-        :ranking="ranking"
+        @finish="goToMainMenu"
+        @restart="restartGame"
     />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from 'vuex';
 import MainMenu from "./components/MainMenu.vue";
 import ScoreCounter from "./components/ScoreCounter.vue";
 import PlayerSelect from "./components/PlayerSelect.vue";
@@ -38,9 +35,10 @@ import FinalScores from "./components/FinalScores.vue";
 import Rules from "./components/Rules.vue";
 
 import AppStates from "./util/appState";
-import defaultRules from "./util/defaultRules";
+import gradientBackground from './util/gradientBackground';
 
 export default {
+  mixins: [ gradientBackground ],
   components: {
     ScoreCounter,
     MainMenu,
@@ -48,55 +46,32 @@ export default {
     FinalScores,
     Rules
   },
-
   data: function() {
     return {
       appStates: AppStates,
-      players: [],
-      ranking: [],
       state: AppStates.MAIN_MENU,
-      rules: JSON.parse(JSON.stringify(defaultRules))
     };
   },
-
+  computed: {
+    ...mapState('settings', ['theme'])
+  },
   methods: {
+    ...mapActions('game', ['resetAllScores']),
     changeState(state) {
       this.state = state;
     },
-    registerPlayers(players) {
-      if (players.length > 1) {
-        players.forEach(player =>
-          this.players.push({
-            name: player,
-            score: 0,
-            fault: 0,
-            isEliminated: false
-          })
-        );
-        this.changeState(this.appStates.GAME_ONGOING);
-      } else {
-        alert("Not enough players");
-      }
+    startGame() {
+      this.resetAllScores();
+      this.changeState(this.appStates.GAME_ONGOING);
     },
-    applyRules(rules) {
-      this.rules = rules;
+    goToMainMenu() {
       this.changeState(this.appStates.MAIN_MENU);
     },
-    finishGame(ranking) {
-      this.ranking = ranking;
+    finishGame() {
       this.changeState(this.appStates.GAME_FINISHED);
     },
-    reset() {
-      this.players = [];
-      this.ranking = [];
-      this.changeState(this.appStates.MAIN_MENU);
-    },
-    restart() {
-      this.players.forEach(player => {
-        player.score = 0;
-        player.fault = 0;
-        player.isEliminated = false;
-      });
+    restartGame() {
+      this.resetAllScores();
       this.changeState(this.appStates.GAME_ONGOING);
     }
   }
@@ -105,5 +80,7 @@ export default {
 
 <style lang="less">
 @import "./style/variables";
+@import "./style/mixins";
 @import "./style/main";
+@import "./style/icons";
 </style>

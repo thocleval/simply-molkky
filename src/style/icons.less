@@ -1,0 +1,24 @@
+.icon-cross {
+  position: relative;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    border-bottom: 1px solid @dark-blue;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
