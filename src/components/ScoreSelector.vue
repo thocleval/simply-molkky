@@ -8,7 +8,7 @@
         :isSelected="selected.includes(number)"
         :number="number"/>
     </div>
-    <button @click="validateScore" v-html="$t(okMessage, {score: currentScore})">{{okMessage}}</button>
+    <button class="btn-validate" @click="validateScore" v-html="$t(okMessage, { score })">{{okMessage}}</button>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     };
   },
   computed: {
-    currentScore: function() {
+    score: function() {
       if (this.selected.length === 1) {
         return this.selected[0];
       } else {
@@ -34,7 +34,7 @@ export default {
       }
     },
     okMessage: function() {
-      return this.currentScore > 0
+      return this.score > 0
         ? "game.submit.ok"
         : "game.submit.missed";
     }
@@ -52,7 +52,7 @@ export default {
       this.selected = [];
     },
     validateScore() {
-      this.$emit('validateScore', this.currentScore);
+      this.$emit('validateScore', this.score);
       this.resetScore();
     }
   }

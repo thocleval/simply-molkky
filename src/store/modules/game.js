@@ -5,7 +5,7 @@ import VueCookie from 'vue-cookie';
 import defaultRules from "../../util/defaultRules";
 import { SET_RULES, ADD_PLAYER, REMOVE_PLAYER, REMOVE_ALL_PLAYERS, RESET_ALL_SCORES, ADD_SCORE_TO_PLAYER } from './game-mutation-types';
 
-const PLAYERS_LIMIT = 16;
+export const PLAYERS_LIMIT = 16;
 
 export default {
   namespaced: true,
@@ -36,23 +36,25 @@ export default {
           return possibleWinner.score === rules.goal;
         case 'higher':
           return possibleWinner.score >= rules.goal;
-        default:
-          return false;
       }
     }
   },
   mutations: {
     [SET_RULES] (state, rules) {
-      rules.goal = Math.max(rules.goal, 1);
-      if (rules.penaltyResetAmount > rules.goal) {
-        rules.penaltyResetAmount = 0;
+      const newRules = Object.assign({}, state.rules, rules);
+      newRules.goal = Math.max(newRules.goal, 1);
+      if (newRules.penaltyResetAmount > newRules.goal) {
+        newRules.penaltyResetAmount = 0;
       }
-      if (rules.penaltySubstractAmount > rules.goal) {
-        rules.penaltySubstractAmount = 0;
+      if (newRules.penaltySubstractAmount > newRules.goal) {
+        newRules.penaltySubstractAmount = 0;
       }
-      state.rules = rules;
+      state.rules = newRules;
     },
     [ADD_PLAYER] (state, player) {
+      if (state.players.length >= PLAYERS_LIMIT) {
+        return;
+      }
       state.players.push(player);
     },
     [REMOVE_PLAYER] (state, index) {

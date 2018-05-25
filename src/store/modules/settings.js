@@ -2,16 +2,19 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import VueCookie from 'vue-cookie';
 
+import gradientBackground from '../../util/gradientBackground';
+import Themes from "../../util/themes";
+
 export default {
   namespaced: true,
   state() {
     return {
-      theme: {}
+      theme: Themes[0]
     }
   },
   getters: {
     themeCSS: ({ theme }) => {
-      return `background-image: linear-gradient(135deg, ${theme.start} 10%, ${theme.stop} 100%);`;
+      return gradientBackground.methods.gradientBackground(theme);
     }
   },
   mutations: {

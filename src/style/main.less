@@ -32,7 +32,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-image: linear-gradient(135deg, #fff886 10%, #f072b6 100%);
 }
 
 .🖼 {
@@ -51,6 +50,10 @@ body {
   .responsive(@small-breakpoint, {
     padding: @spacing-small;
   });
+
+  &.auto-height {
+    min-height: initial;
+  }
 
   > * {
     flex-shrink: 0;

@@ -12,6 +12,7 @@
 <script>
 import Vue from 'vue';
 import { mapMutations } from 'vuex';
+import Themes from "../util/themes";
 
 import gradientBackground from '../util/gradientBackground';
 
@@ -19,32 +20,7 @@ export default {
   mixins: [ gradientBackground ],
   data() {
     return {
-      themes: [
-        {
-          start: '#fff886',
-          stop: '#f072b6'
-        },
-        {
-          start: '#667eea ',
-          stop: '#764ba2'
-        },
-        {
-          start: '#13547a',
-          stop: '#80d0c7'
-        },
-        {
-          start: '#96deda',
-          stop: '#50c9c3'
-        },
-        {
-          start: '#fdfcfb',
-          stop: '#e2d1c3'
-        },
-        {
-          start: '#555555',
-          stop: '#aaaaaa'
-        }
-      ]
+      themes: Themes
     };
   },
   methods: {

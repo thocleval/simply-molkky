@@ -1,5 +1,5 @@
 <template>
-  <div class="🖼 main-menu">
+  <div class="🖼 auto-height">
     <h1 class="main-title">{{$t('main-menu.title')}}</h1>
     <button @click="goToPlayerSelect">{{$t('main-menu.start')}}</button>
     <button @click="goToRules">{{$t('main-menu.rules')}}</button>
@@ -33,10 +33,6 @@ export default {
 
 <style lang="less" scoped>
 @import "../style/variables";
-
-.🖼.main-menu {
-  min-height: initial;
-}
 
 .🌐 {
   margin-top: @spacing;
