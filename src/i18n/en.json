@@ -1,0 +1,58 @@
+{
+  "main-menu": {
+    "title": "Simply Mölkky",
+    "start": "Start a game",
+    "rules": "Manage rules"
+  },
+  "players": {
+    "title": "Add players",
+    "name-placeholder": "Player name",
+    "cancel": "Cancel",
+    "start": "Start game",
+    "max-players": "Maximum number of players reached"
+  },
+  "game": {
+    "scores": {
+      "title": "Scores"
+    },
+    "turn": "<span class=\"player-name\">{name}</span>'s turn",
+    "submit": {
+      "missed": "Missed shot",
+      "ok" : "Ok (+{score})"
+    },
+    "score": "{score} points",
+    "finish": "Finish",
+    "restart": "Restart"
+  },
+  "rules": {
+    "title": "Rules",
+    "reset": "Default",
+    "validate": "Ok",
+    "goal": {
+      "label": "Score to reach :",
+      "points": "points"
+    },
+    "score": {
+      "label": "Win condition :",
+      "higher": "Score {goal} points or more",
+      "exact": "Score exactly {goal} points"
+    },
+    "penalty": {
+      "label": "Penalty for scoring too much :",
+      "reset": "Score is set back to : ",
+      "excess": "Take away excess points (Eg. 56 -> 44)",
+      "substract": "Substract points :"
+    },
+    "faults": {
+      "label": "In case of 3 consecutive misses :",
+      "eliminated": "The player is eliminated",
+      "reset": "The player's score is reset to 0",
+      "nothing": "Nothing happens"
+    },
+    "zap": {
+      "label": "Zap! If player 1 matches player 2's score :",
+      "nothing": "Nothing happens",
+      "half": "Player 2's score is halved"
+    }
+  }
+}

@@ -1,35 +1,40 @@
 <template>
-    <div class="🖼 main-menu">
-        <h1>Simply Mölkky</h1>
-        <button @click="goToPlayerSelect">Start a game</button>
-        <button @click="goToRules">Manage rules</button>
-    </div>
+  <div class="🖼 auto-height">
+    <h1 class="main-title">{{$t('main-menu.title')}}</h1>
+    <button @click="goToPlayerSelect">{{$t('main-menu.start')}}</button>
+    <button @click="goToRules">{{$t('main-menu.rules')}}</button>
+    <LanguageSwitcher />
+    <ThemeSwitcher />
+  </div>
 </template>
 
 <script>
+import LanguageSwitcher from './LanguageSwitcher';
+import ThemeSwitcher from './ThemeSwitcher';
 
 export default {
-    methods: {
-        goToPlayerSelect () {
-            this.$emit('goToPlayerSelect');
-        },
-        goToRules () {
-            this.$emit('goToRules');
-        },
+  components: {
+    LanguageSwitcher,
+    ThemeSwitcher
+  },
+  methods: {
+    goToPlayerSelect() {
+      this.$emit("goToPlayerSelect");
+    },
+    goToRules() {
+      this.$emit("goToRules");
+    },
+    getThemeStyle(theme) {
+      return `linear-gradient(135deg, ${theme.start} 10%, ${theme.stop} 100%)`;
     }
-}
+  }
+};
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+@import "../style/variables";
 
-h1 {
-    margin-bottom: 1rem;
-    font-size: 3rem;
-    font-weight: 100;
+.🌐 {
+  margin-top: @spacing;
 }
-
-.main-menu{
-    height: unset;
-}
-
 </style>

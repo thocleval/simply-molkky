@@ -27,11 +27,8 @@ npm test
 
  - Add transition animations between states;
  - Fix broken english;
- - Add i18n;
  - Add a proper end game screen;
- - Care about lint;
  - Add tests;
  - Add a deployment pipeline;
- - Add a settings menu to change languages and background colours;
  - Find more emojis for css selectors;
  - turn this into an app (PWA why not).

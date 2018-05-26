@@ -1,207 +1,188 @@
 <template>
-    <div class="🖼">
-        <h1>Rules</h1>
-        <div class="scroll-view">
-        <p class="rule">Score to reach :<input type="number" min="1" max="999" class="number-input" v-model="currentRules.goal">points</p>
-        <p class="rule">Win condition :</p>
-        <div class="row">
-            <label class="radio-wrapper">Score {{currentRules.goal}} points or more
-                <input type="radio" name="score" value="higher" v-model="currentRules.winCondition">
-                <span class="checkmark"></span>
-            </label>
+  <div class="🖼">
+    <h1 class="main-title">{{$t('rules.title')}}</h1>
+    <div class="scroll-view">
+      <div class="rule">
+        <p class="rule-label">{{$t("rules.goal.label")}} <input type="number" min="1" max="999" class="number-input" v-model="tempRules.goal">{{$t("rules.goal.points")}}</p>
+      </div>
+
+      <div class="rule">
+        <p class="rule-label">{{$t("rules.score.label")}}</p>
+        <div class="radio-wrapper">
+          <input type="radio" name="score" id="score-exact" value="exact" v-model="tempRules.winCondition">
+          <label for="score-exact">{{$t("rules.score.exact", {goal: rules.goal})}}</label>
         </div>
-        <div class="row">
-            <label class="radio-wrapper">Score exactly {{currentRules.goal}} points
-                <input type="radio" checked="checked" name="score" value="exact" v-model="currentRules.winCondition">
-                <span class="checkmark"></span>
-            </label>
+        <div class="radio-wrapper">
+          <input type="radio" name="score" value="higher" id="score-higher" v-model="tempRules.winCondition">
+          <label for="score-higher">{{$t("rules.score.higher", {goal: rules.goal})}}</label>
         </div>
-        <p class="rule" :class="{ disabled: isDisabled }" >Penalty for scoring too much :</p>
-        <div class="row" :class="{ disabled: isDisabled }" >
-            <label class="radio-wrapper">Score is set back to
-                <input type="radio" checked="checked" value="reset" v-model="currentRules.penalty" name="penalty">
-                <span class="checkmark"></span>
-            </label>
-            <input type="number" min="1" max="999" class="number-input" v-model="currentRules.penaltyResetAmmount">
+      </div>
+
+      <div class="rule" :class="{ disabled: isDisabled }" >
+        <p class="rule-label">{{$t("rules.penalty.label")}}</p>
+        <div class="radio-wrapper">
+          <input type="radio" name="penalty" value="reset" id="penalty-reset" v-model="tempRules.penalty">
+          <label for="penalty-reset">{{$t('rules.penalty.reset')}} <input type="number" min="1" max="999" class="number-input" v-model="tempRules.penaltyResetAmount"></label>
         </div>
-        <div class="row" :class="{ disabled: isDisabled }" >
-            <label class="radio-wrapper">Take away excess points (Eg. 56 -> 44)
-                <input type="radio" name="penalty" value="excess" v-model="currentRules.penalty">
-                <span class="checkmark"></span>
-            </label>
+        <div class="radio-wrapper">
+          <input type="radio" name="penalty" value="excess" id="penalty-excess" v-model="tempRules.penalty">
+          <label for="penalty-excess">{{$t('rules.penalty.excess')}}</label>
         </div>
-        <div class="row" :class="{ disabled: isDisabled }" >
-            <label class="radio-wrapper">Substract
-                <input type="radio" name="penalty" value="substract" v-model="currentRules.penalty">
-                <span class="checkmark"></span>
-            </label>
-            <input type="number" min="1" max="999" class="number-input" v-model="currentRules.penaltySubstractAmmount"> points
+        <div class="radio-wrapper">
+          <input type="radio" name="penalty" value="substract"  id="penalty-substract" v-model="tempRules.penalty">
+          <label for="penalty-substract">{{$t('rules.penalty.substract')}} <input type="number" min="1" max="999" class="number-input" v-model="tempRules.penaltySubstractAmount"></label>
         </div>
-        <p class="rule">In case of 3 consecutive misses :</p>
-        <div class="row">
-            <label class="radio-wrapper">The player is eliminated
-                <input type="radio" value="eliminated" v-model="currentRules.sanction" name="faults">
-                <span class="checkmark"></span>
-            </label>
+      </div>
+
+      <div class="rule">
+        <p class="rule-label">{{$t("rules.faults.label")}}</p>
+        <div class="radio-wrapper">
+          <input type="radio" name="faults" value="eliminated" id="faults-eliminated" v-model="tempRules.sanction">
+          <label for="faults-eliminated">{{$t('rules.faults.eliminated')}}</label>
         </div>
-        <div class="row">
-            <label class="radio-wrapper">The player's score is reset to 0
-                <input type="radio" value="reset" v-model="currentRules.sanction" name="faults">
-                <span class="checkmark"></span>
-            </label>
+        <div class="radio-wrapper">
+          <input type="radio" name="faults" value="reset" id="faults-reset" v-model="tempRules.sanction">
+          <label for="faults-reset">{{$t('rules.faults.reset')}}</label>
         </div>
-        <div class="row">
-            <label class="radio-wrapper">Nothing happens
-                <input type="radio" value="nothing" v-model="currentRules.sanction" name="faults">
-                <span class="checkmark"></span>
-            </label>
+        <div class="radio-wrapper">
+          <input type="radio" name="faults" value="nothing" id="faults-nothing" v-model="tempRules.sanction">
+          <label for="faults-nothing">{{$t('rules.faults.nothing')}}</label>
         </div>
-        <p class="rule">Zap! If player 1 matches player 2's score :</p>
-        <div class="row">
-            <label class="radio-wrapper">Nothing happens
-                <input type="radio" checked="checked" value="nothing" v-model="currentRules.zap" name="zap">
-                <span class="checkmark"></span>
-            </label>
+      </div>
+
+      <div class="rule">
+        <p class="rule-label">{{$t("rules.zap.label")}}</p>
+        <div class="radio-wrapper">
+          <input type="radio" name="zap" value="nothing" id="zap-nothing" v-model="tempRules.zap">
+          <label for="zap-nothing">{{$t("rules.zap.nothing")}}</label>
         </div>
-        <div class="row">
-            <label class="radio-wrapper">player 2's score is halved
-                <input type="radio" value="half" v-model="currentRules.zap"  name="zap">
-                <span class="checkmark"></span>
-            </label>
+        <div class="radio-wrapper">
+          <input type="radio" name="zap" value="half" id="zap-half" v-model="tempRules.zap">
+          <label for="zap-half">{{$t("rules.zap.half")}}</label>
         </div>
+      </div>
     </div>
-        <div class="row">
-            <button @click="reset">Default</button>
-            <button @click="validate" >Ok</button>
-        </div>
+    <div class="row">
+      <button @click="reset">{{$t('rules.reset')}}</button>
+      <button @click="validate" >{{$t('rules.validate')}}</button>
     </div>
+  </div>
 </template>
 
 
 <script>
-import defaultRules from '../util/defaultRules'
+import { mapActions, mapState } from 'vuex';
+import defaultRules from "../util/defaultRules";
 
 export default {
-    props: {
-        rules: {
-                type: Object,
-        },
-    },
-
-    data: function () {
-        return {
-          currentRules: this.rules || JSON.parse(JSON.stringify(defaultRules))
-        }
-    },
-
-    methods: {
-        reset () {
-            this.currentRules = JSON.parse(JSON.stringify(defaultRules))
-        },
-        validate () {
-            this.currentRules.goal = Math.max(this.currentRules.goal, 1)
-            if (this.currentRules.penaltyResetAmmount > this.currentRules.goal){
-                this.currentRules.penaltyResetAmmount = 0
-            }
-            if (this.currentRules.penaltySubstractAmmount > this.currentRules.goal){
-                this.currentRules.penaltySubstractAmmount = 0
-            }
-            this.$emit('applyRules', this.currentRules)
-        },
-    },
-
-    computed: {
-        isDisabled: function () {
-            return this.rules.winCondition !== "exact"
-        }
+  data() {
+    return {
+      tempRules: {}
     }
-}
+  },
+  computed: {
+    ...mapState('game', ['rules']),
+    isDisabled() {
+      return this.tempRules.winCondition !== "exact";
+    }
+  },
+  methods: {
+    ...mapActions('game', ['setRules', 'resetRules']),
+    reset() {
+      this.resetRules();
+      this.tempRules = Object.assign({}, this.rules);
+    },
+    validate() {
+      this.setRules(this.tempRules);
+      this.$emit("applyRules");
+    }
+  },
+  mounted() {
+    this.tempRules = Object.assign({}, this.rules);
+  }
+};
 </script>
 
 <style lang="less">
+@import "../style/variables";
+
+.rule {
+  text-align: left;
+  align-self: stretch;
+  margin-top: @spacing-small;
+
+  .rule-label {
+    font-size: 1.5rem;
+  }
+}
 
 .radio-wrapper {
+  margin: 0;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  margin-top: 0.2rem;
+
+  /* Hide the browser's default radio button */
+  & input[type="radio"] {
+    display: none;
+  }
+
+  & input:checked ~ label {
+    &::before {
+      box-shadow: inset 0 0 0 .6rem;
+    }
+  }
+
+  & input:checked:hover ~ label {
+    &::before {
+      box-shadow: inset 0 0 0 .6rem;
+    }
+  }
+
+  & input:hover ~ label {
+    &::before {
+      box-shadow: inset 0 0 0 0.1rem;
+    }
+  }
+
+  label {
+    cursor: pointer;
     margin: 0;
-    display: block;
-    position: relative;
-    padding-left: 1.6rem;
-    cursor: pointer;
-    user-select: none;
-    text-align: left;
+    font-size: 1.4rem;
 
-    /* Hide the browser's default radio button */
-    & input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-    }
+    &::before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 1rem;
+      width: 1rem;
+      border-radius: 50%;
+      border: 2px solid @dark-blue;
+      background: transparent;
+      transition: box-shadow @transition-duration ease;
+      outline: none;
+      margin-right: 1rem;
+      margin-bottom: 0.3rem;
+      box-shadow: inset 0 0 0 0;
 
-    & input:checked ~ .checkmark {
-        box-shadow: inset 0 0 0px 0.25rem;
-    }
-
-    & input:checked:hover ~ .checkmark {
-        box-shadow: inset 0 0 0px 0.25rem;
-    }
-
-    & input:hover ~ .checkmark{
-        box-shadow: inset 0 0 0px 0.1rem;
-    }
-}
-
-
-
-/* Create a custom radio button */
-.checkmark {
-    position: absolute;
-    top: -1rem;
-    left: 0;
-    height: 0.8rem;
-    width: 0.8rem;
-    background-color: #eee;
-    border-radius: 50%;
-    border: 2px solid #2c3e50;
-    background: transparent;
-    transform: perspective(1px) translateZ(0);
-    transition-property: box-shadow;
-    transition-duration: 0.2s;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: uppercase;
-    outline: none;
-    &.disabled {
+      &.disabled {
         opacity: 0.3;
         cursor: not-allowed;
-
-        &:before{
-            display: none;
-        }
+      }
     }
+  }
 }
 
-.row{
-    display: flex;
-    align-self: flex-start;
-    justify-content: flex-start;
-    font-size: 0.8rem;
-    align-items: center;
+.number-input {
+  background: fade(@white, 50%);
+  border: 2px solid @dark-blue;
+  outline: none;
+  margin: 0 .2rem;
+  text-align: center;
+  padding: .2rem .6rem;
+  width: auto;
 }
-
-.rule{
-    font-size: 1rem;
-    text-align: left;
-    align-self: flex-start;
-    padding-left: 1rem;
-
-}
-
-.number-input{
-    background: rgba(255, 255, 255, 0.5);
-    border: 2px solid #2c3e50;
-    outline: none;
-    margin: 0 0.2rem;
-    text-align: right;
-}
-
 </style>

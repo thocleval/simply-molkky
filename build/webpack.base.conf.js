@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
@@ -77,6 +78,14 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new GoogleFontsPlugin({
+      fonts: [
+        { family: 'Montserrat', variants: [ '300', '400', '500', '700', '900' ] },
+        { family: 'Work Sans', variants: [ '300', '400', '500', '700', '900' ] },
+      ]
+    }),
+  ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).
