@@ -14,7 +14,7 @@
     </div>
     <div class="row">
       <button @click="cancel">{{$t('players.cancel')}}</button>
-      <button @click="validate" :class="{ disabled: isValidateDisabled }" >{{$t('players.start')}}</button>
+      <button @click="startGame" :class="{ disabled: isValidateDisabled }" >{{$t('players.start')}}</button>
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('game', ['addPlayer', 'removePlayer']),
+    ...mapActions('game', ['addPlayer', 'removePlayer', 'resetAllScores']),
     onAddPlayer() {
       if (!this.canAddPlayers) {
         return;
@@ -47,17 +47,18 @@ export default {
       }
     },
     cancel() {
-      this.$emit('goBack');
+      this.$router.push({name: 'home'});
     },
-    validate() {
-      this.$emit('startGame');
+    startGame() {
+      this.resetAllScores();
+      this.$router.push({name: 'game'});
     }
   }
 };
 </script>
 
 <style lang="less">
-@import "../style/variables";
+@import "../../style/variables";
 
 .📝 {
   padding: @spacing-small;

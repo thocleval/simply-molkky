@@ -1,16 +1,16 @@
 <template>
   <div class="🖼 auto-height">
     <h1 class="main-title">{{$t('main-menu.title')}}</h1>
-    <button @click="goToPlayerSelect">{{$t('main-menu.start')}}</button>
-    <button @click="goToRules">{{$t('main-menu.rules')}}</button>
+    <router-link class="button" to="/player-select">{{$t('main-menu.start')}}</router-link>
+    <router-link class="button" to="/rules">{{$t('main-menu.rules')}}</router-link>
     <LanguageSwitcher />
     <ThemeSwitcher />
   </div>
 </template>
 
 <script>
-import LanguageSwitcher from './LanguageSwitcher';
-import ThemeSwitcher from './ThemeSwitcher';
+import LanguageSwitcher from '../LanguageSwitcher';
+import ThemeSwitcher from '../ThemeSwitcher';
 
 export default {
   components: {
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../style/variables";
+@import "../../style/variables";
 
 .🌐 {
   margin-top: @spacing;

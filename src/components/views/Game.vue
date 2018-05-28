@@ -1,30 +1,23 @@
 <template>
   <div class="🖼">
-    <div class="wrapper-title">
-      <p class="turn" v-html="$t('game.turn', {name: currentPlayer.name})"></p>
-      <div class="faults-wrapper">
-        <div v-for="index in [1, 2 ,3]" :key="index" class="faults" :class=" { x: currentPlayer.fault >= index} ">
-        </div>
-      </div>
-      <span class="points">{{currentPlayer.score}}/{{rules.goal}}</span>
-    </div>
-
+    <GameHeader :player="currentPlayer" />
     <ScoreSelector @validateScore="addScore" />
-
     <h2 class="medium-title">{{$t('game.scores.title')}}</h2>
-    <ScoresDisplay />
+    <Ranking />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import ScoreSelector from "./ScoreSelector.vue";
-import ScoresDisplay from "./ScoresDisplay.vue";
+import ScoreSelector from "../game/ScoreSelector.vue";
+import GameHeader from "../game/GameHeader.vue";
+import Ranking from "../game/Ranking.vue";
 
 export default {
   components: {
     ScoreSelector,
-    ScoresDisplay
+    Ranking,
+    GameHeader
   },
   data: function() {
     return {
@@ -46,7 +39,7 @@ export default {
         score: newScore
       });
       if (this.hasWinner) {
-        this.$emit('finishGame');
+        this.$router.push({name: 'final-scores'});
         return;
       }
       this.nextPlayer();
@@ -62,14 +55,15 @@ export default {
 </script>
 
 <style lang="less">
-@import "../style/variables";
-
+@import "../../style/variables";
 .turn {
   .player-name {
     font-weight: @bold-weight;
   }
 }
-
+</style>
+<style lang="less" scoped>
+@import "../../style/variables";
 .wrapper-title {
   display: flex;
   width: 100%;
@@ -91,27 +85,14 @@ export default {
   * + * {
     margin-top: 0;
   }
-}
 
-.faults-wrapper {
-  display: flex;
-  border-right: 1px solid @dark-blue;
-  padding-right: 1rem;
-  margin-right: 1rem;
-}
-
-.faults {
-  @fault-size: 1.7rem;
-  height: @fault-size;
-  width: @fault-size;
-  border-radius: 50%;
-  margin: 0 0.2rem;
-  border: 2px solid @dark-blue;
-  background: transparent;
-  transition: background-color @transition-duration ease;
-
-  &.x {
-    background-color: @dark-blue;
+  .faults-counter {
+    &:not(.no-faults) {
+      border-right: 1px solid @dark-blue;
+      padding-right: 1rem;
+      margin-right: 1rem;
+    }
   }
 }
+
 </style>

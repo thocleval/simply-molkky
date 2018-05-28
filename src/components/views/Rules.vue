@@ -72,7 +72,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import defaultRules from "../util/defaultRules";
+import defaultRules from "../../util/defaultRules";
 
 export default {
   data() {
@@ -94,7 +94,7 @@ export default {
     },
     validate() {
       this.setRules(this.tempRules);
-      this.$emit("applyRules");
+      this.$router.push({name: 'home'});
     }
   },
   mounted() {
@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../style/variables";
+@import "../../style/variables";
 
 .rule {
   text-align: left;

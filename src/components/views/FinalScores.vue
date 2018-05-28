@@ -8,7 +8,7 @@
       </p>
     </div>
     <button @click="goToMainMenu">{{$t('game.finish')}}</button>
-    <button @click="restart">{{$t('game.restart')}}</button>
+    <button @click="restartGame">{{$t('game.restart')}}</button>
   </div>
 </template>
 
@@ -22,10 +22,11 @@ export default {
   methods: {
     ...mapActions('game', ['resetAllScores']),
     goToMainMenu() {
-      this.$emit("finish");
+      this.$router.push({name: 'home'});
     },
-    restart() {
-      this.$emit("restart");
+    restartGame() {
+      this.resetAllScores();
+      this.$router.push({name: 'game'});
     }
   }
 };

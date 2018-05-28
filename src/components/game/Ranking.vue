@@ -1,12 +1,10 @@
 <template>
   <div class="scroll-view score-display">
     <div v-for="(player, index) in ranking" :key="index" class="wrapper" :class="{ eliminated: player.isEliminated }">
-      <p class="rank"> {{ index + 1 }} </p>
+      <p class="rank">{{ index + 1 }}</p>
       <p class="name">{{ player.name }}</p>
-      <div class="faults-wrapper">
-        <div v-for="indox in [1, 2 ,3]" :key="indox" class="faults" :class=" { x: player.fault >= indox} "></div>
-      </div>
-      <span class="points" >{{player.score}}</span>
+      <FaultsCounter :faults="player.fault" small/>
+      <p class="points">{{player.score}}</p>
     </div>
   </div>
 </template>
@@ -14,8 +12,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import FaultsCounter from "../game/FaultsCounter.vue";
 
 export default {
+  components: {
+    FaultsCounter
+  },
   computed: {
     ...mapGetters('game', ['ranking']),
   }
@@ -23,7 +25,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../style/variables";
+@import "../../style/variables";
 
 .wrapper {
   display: flex;
@@ -50,19 +52,8 @@ export default {
     text-overflow: ellipsis;
   }
 
-  .faults-wrapper {
-
-  }
-
-  .faults {
-    height: .8rem;
-    width: .8rem;
-    margin: 0 2px;
-    border-width: 1px;
-  }
-
   .points {
-    width: 1.5rem;
+    width: 2rem;
     font-size: 1.7rem;
     text-align: right;
   }
@@ -71,8 +62,12 @@ export default {
     color: @error-color;
   }
 
-  * + * {
-    margin-top: 0;
+  .faults-counter {
+    &:not(.no-faults) {
+      border-right: 1px solid @dark-blue;
+      padding-right: 1rem;
+      margin-right: 1rem;
+    }
   }
 }
 </style>
