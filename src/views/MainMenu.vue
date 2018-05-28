@@ -1,10 +1,10 @@
 <template>
   <div class="🖼 auto-height">
     <h1 class="main-title">{{$t('main-menu.title')}}</h1>
-    <router-link class="button" to="/player-select">{{$t('main-menu.start')}}</router-link>
-    <router-link class="button" to="/rules">{{$t('main-menu.rules')}}</router-link>
-    <LanguageSwitcher />
-    <ThemeSwitcher />
+    <router-link class="btn" to="/player-select">{{$t('main-menu.start')}}</router-link>
+    <router-link class="btn" to="/rules">{{$t('main-menu.rules')}}</router-link>
+    <language-switcher />
+    <theme-switcher />
   </div>
 </template>
 

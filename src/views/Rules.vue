@@ -9,11 +9,11 @@
       <div class="rule">
         <p class="rule-label">{{$t("rules.score.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" name="score" id="score-exact" value="exact" v-model="tempRules.winCondition">
+          <input type="radio" name="score" id="score-exact" :value="rulesTypes.WIN_CONDITION_EXACT" v-model="tempRules.winCondition">
           <label for="score-exact">{{$t("rules.score.exact", {goal: rules.goal})}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="score" value="higher" id="score-higher" v-model="tempRules.winCondition">
+          <input type="radio" name="score" :value="rulesTypes.WIN_CONDITION_HIGHER" id="score-higher" v-model="tempRules.winCondition">
           <label for="score-higher">{{$t("rules.score.higher", {goal: rules.goal})}}</label>
         </div>
       </div>
@@ -21,15 +21,15 @@
       <div class="rule" :class="{ disabled: isDisabled }" >
         <p class="rule-label">{{$t("rules.penalty.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" name="penalty" value="reset" id="penalty-reset" v-model="tempRules.penalty">
+          <input type="radio" name="penalty" :value="rulesTypes.PENALTY_RESET" id="penalty-reset" v-model="tempRules.penalty">
           <label for="penalty-reset">{{$t('rules.penalty.reset')}} <input type="number" min="1" max="999" class="number-input" v-model="tempRules.penaltyResetAmount"></label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="penalty" value="excess" id="penalty-excess" v-model="tempRules.penalty">
+          <input type="radio" name="penalty" :value="rulesTypes.PENALTY_EXCESS" id="penalty-excess" v-model="tempRules.penalty">
           <label for="penalty-excess">{{$t('rules.penalty.excess')}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="penalty" value="substract"  id="penalty-substract" v-model="tempRules.penalty">
+          <input type="radio" name="penalty" :value="rulesTypes.PENALTY_SUBSTRACT"  id="penalty-substract" v-model="tempRules.penalty">
           <label for="penalty-substract">{{$t('rules.penalty.substract')}} <input type="number" min="1" max="999" class="number-input" v-model="tempRules.penaltySubstractAmount"></label>
         </div>
       </div>
@@ -37,15 +37,15 @@
       <div class="rule">
         <p class="rule-label">{{$t("rules.faults.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" name="faults" value="eliminated" id="faults-eliminated" v-model="tempRules.sanction">
+          <input type="radio" name="faults" :value="rulesTypes.SANCTION_ELIMINATED" id="faults-eliminated" v-model="tempRules.sanction">
           <label for="faults-eliminated">{{$t('rules.faults.eliminated')}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="faults" value="reset" id="faults-reset" v-model="tempRules.sanction">
+          <input type="radio" name="faults" :value="rulesTypes.SANCTION_RESET" id="faults-reset" v-model="tempRules.sanction">
           <label for="faults-reset">{{$t('rules.faults.reset')}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="faults" value="nothing" id="faults-nothing" v-model="tempRules.sanction">
+          <input type="radio" name="faults" :value="rulesTypes.SANCTION_NOTHING" id="faults-nothing" v-model="tempRules.sanction">
           <label for="faults-nothing">{{$t('rules.faults.nothing')}}</label>
         </div>
       </div>
@@ -53,36 +53,37 @@
       <div class="rule">
         <p class="rule-label">{{$t("rules.zap.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" name="zap" value="nothing" id="zap-nothing" v-model="tempRules.zap">
+          <input type="radio" name="zap" :value="rulesTypes.ZAP_HALF" id="zap-nothing" v-model="tempRules.zap">
           <label for="zap-nothing">{{$t("rules.zap.nothing")}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="zap" value="half" id="zap-half" v-model="tempRules.zap">
+          <input type="radio" name="zap" :value="rulesTypes.ZAP_NOTHING" id="zap-half" v-model="tempRules.zap">
           <label for="zap-half">{{$t("rules.zap.half")}}</label>
         </div>
       </div>
     </div>
     <div class="row">
-      <button @click="reset">{{$t('rules.reset')}}</button>
-      <button @click="validate" >{{$t('rules.validate')}}</button>
+      <button class="btn" @click="reset">{{$t('rules.reset')}}</button>
+      <button class="btn" @click="validate" >{{$t('rules.validate')}}</button>
     </div>
   </div>
 </template>
 
-
 <script>
 import { mapActions, mapState } from 'vuex';
+import rulesTypes from '../util/rules.types';
 
 export default {
   data() {
     return {
       tempRules: {},
+      rulesTypes,
     };
   },
   computed: {
     ...mapState('game', ['rules']),
     isDisabled() {
-      return this.tempRules.winCondition !== 'exact';
+      return this.tempRules.winCondition !== rulesTypes.WIN_CONDITION_EXACT;
     },
   },
   methods: {
@@ -101,6 +102,7 @@ export default {
   },
 };
 </script>
+
 
 <style lang="less">
 @import "../style/variables";
@@ -122,7 +124,7 @@ export default {
   cursor: pointer;
   user-select: none;
   text-align: left;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 
   /* Hide the browser's default radio button */
   & input[type="radio"] {
@@ -151,9 +153,16 @@ export default {
     cursor: pointer;
     margin: 0;
     font-size: 1.4rem;
+    padding-left: 2.5rem;
+    position: relative;
+    display: inline-block;
 
     &::before {
       content: '';
+      position: absolute;
+      top: 50%;
+      left: 0rem;
+      transform: translate(0, -50%);
       display: inline-block;
       vertical-align: middle;
       height: 1rem;

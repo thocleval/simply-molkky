@@ -1,9 +1,9 @@
 <template>
   <div class="🖼">
-    <GameHeader :player="currentPlayer" />
-    <ScoreSelector @validateScore="addScore" />
+    <game-header :player="currentPlayer" />
+    <score-selector @validateScore="addScore" />
     <h2 class="medium-title">{{$t('game.scores.title')}}</h2>
-    <Ranking />
+    <ranking />
   </div>
 </template>
 

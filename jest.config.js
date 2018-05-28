@@ -5,12 +5,14 @@ module.exports = {
     'json',
     'vue',
   ],
-  coverageDirectory: '<rootDir>/test/unit/coverage',
+  coverageDirectory: '<rootDir>/tests/unit/coverage',
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
     '!src/main.js',
-    '!src/router/index.js',
-    '!src/i18n/index.js',
+    '!src/router.js',
+    '!src/store.js',
+    '!src/registerServiceWorker.js',
+    '!src/i18n.js',
     '!**/node_modules/**',
   ],
   transform: {

@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="🎳" :class="{ selected: isSelected }" @click="onClick">
+    <button type="button" class="btn 🎳" :class="{ selected: isSelected }" @click="onClick">
       <p class="number">{{ number }}</p>
     </button>
 </template>

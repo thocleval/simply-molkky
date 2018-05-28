@@ -1,4 +1,4 @@
-import { ADD_PLAYER, REMOVE_PLAYER, REMOVE_ALL_PLAYERS } from '@/stores/game-mutation-types';
+import { ADD_PLAYER, REMOVE_PLAYER, REMOVE_ALL_PLAYERS } from '@/stores/gameMutation.types';
 import gameStore from '@/stores/game';
 
 const {

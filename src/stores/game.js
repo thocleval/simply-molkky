@@ -1,7 +1,5 @@
-import VueI18n from 'vue-i18n';
-import VueCookie from 'vue-cookie';
-
-import defaultRules from '../util/defaultRules';
+/* eslint-disable no-param-reassign */
+import defaultRules from '../util/rules.default';
 import {
   SET_RULES,
   ADD_PLAYER,
@@ -9,7 +7,8 @@ import {
   REMOVE_ALL_PLAYERS,
   RESET_ALL_SCORES,
   ADD_SCORE_TO_PLAYER,
-} from './game-mutation-types';
+} from './gameMutation.types';
+import rulesTypes from '../util/rules.types';
 
 export const PLAYERS_LIMIT = 16;
 
@@ -18,8 +17,8 @@ export default {
   state() {
     return {
       players: [],
-      rules: Object.assign({}, defaultRules)
-    }
+      rules: Object.assign({}, defaultRules),
+    };
   },
   getters: {
     canAddPlayers: ({ players }) => players.length < PLAYERS_LIMIT,
@@ -39,9 +38,9 @@ export default {
       const possibleWinner = ranking[0];
 
       switch (rules.winCondition) {
-        case 'exact':
+        case rulesTypes.WIN_CONDITION_EXACT:
           return possibleWinner.score === rules.goal;
-        case 'higher':
+        case rulesTypes.WIN_CONDITION_HIGHER:
           return possibleWinner.score >= rules.goal;
         default:
           return false;
@@ -87,11 +86,11 @@ export default {
 
         if (currentPlayer.fault === 3) {
           switch (state.rules.sanction) {
-            case 'eliminated':
+            case rulesTypes.SANCTION_ELIMINATED:
               currentPlayer.isEliminated = true;
               currentPlayer.score = 0;
               break;
-            case 'reset':
+            case rulesTypes.SANCTION_RESET:
               currentPlayer.score = 0;
               currentPlayer.fault = 0;
               break;
@@ -104,15 +103,15 @@ export default {
       currentPlayer.fault = 0;
       currentPlayer.score += score;
 
-      if (currentPlayer.score > state.rules.goal && state.rules.winCondition === 'exact') {
+      if (currentPlayer.score > state.rules.goal && state.rules.winCondition === rulesTypes.WIN_CONDITION_EXACT) {
         switch (state.rules.penalty) {
-          case 'reset':
+          case rulesTypes.PENALTY_RESET:
             currentPlayer.score = state.rules.penaltyResetAmount;
             break;
-          case 'substract':
+          case rulesTypes.PENALTY_SUBSTRACT:
             currentPlayer.score = currentPlayer.score - score - state.rules.penaltySubstractAmount;
             break;
-          case 'excess':
+          case rulesTypes.PENALTY_EXCESS:
             currentPlayer.score = state.rules.goal - (currentPlayer.score - state.rules.goal);
             break;
           default:
@@ -123,21 +122,27 @@ export default {
         currentPlayer.score = 0;
       }
 
-      if (state.rules.zap === 'half') {
-        state.players.forEach((player) => {
-          if (player.score === currentPlayer.score && player !== currentPlayer) {
-            player.score = Math.round(player.score / 2);
-          }
-        });
+      switch (state.rules.zap) {
+        case rulesTypes.ZAP_HALF:
+          state.players.forEach((player) => {
+            if (player.score === currentPlayer.score && player !== currentPlayer) {
+              player.score = Math.round(player.score / 2);
+            }
+          });
+          break;
+        case rulesTypes.ZAP_RESET:
+          // TODO handle this case
+          break;
+        default:
       }
-    }
+    },
   },
   actions: {
     setRules({ commit }, rules) {
       commit(SET_RULES, rules);
     },
     resetRules({ commit }) {
-      commit(SET_RULES, Object.assign({}, defaultRules))
+      commit(SET_RULES, Object.assign({}, defaultRules));
     },
     addPlayer({ commit }, playerName) {
       commit(ADD_PLAYER, {

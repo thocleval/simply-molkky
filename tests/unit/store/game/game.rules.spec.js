@@ -1,6 +1,6 @@
-import { SET_RULES } from '@/stores/game-mutation-types';
+import { SET_RULES } from '@/stores/gameMutation.types';
 import gameStore from '@/stores/game';
-import defaultRules from '@/util/defaultRules';
+import defaultRules from '@/util/rules.default';
 
 const {
   mutations,
