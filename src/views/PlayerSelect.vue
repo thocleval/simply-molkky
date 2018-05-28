@@ -3,7 +3,7 @@
     <h1 class="main-title">{{$t('players.title')}}</h1>
     <form class="row" @submit.prevent="onAddPlayer" v-if="canAddPlayers">
       <input class="📝" v-model="newPlayerName" :placeholder="$t('players.name-placeholder')">
-      <button class="➕" type="submit"> + </button>
+      <button class="btn ➕" type="submit"> + </button>
     </form>
     <p class="max-players" v-if="!canAddPlayers">{{$t('players.max-players')}}</p>
     <div class="scroll-view">
@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="row">
-      <button @click="cancel">{{$t('players.cancel')}}</button>
-      <button @click="startGame" :class="{ disabled: isValidateDisabled }" >{{$t('players.start')}}</button>
+      <button class="btn" @click="cancel">{{$t('players.cancel')}}</button>
+      <button class="btn" @click="startGame" :class="{ disabled: isValidateDisabled }" >{{$t('players.start')}}</button>
     </div>
   </div>
 </template>

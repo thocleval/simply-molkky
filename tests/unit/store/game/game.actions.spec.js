@@ -1,7 +1,7 @@
-import { SET_RULES, ADD_PLAYER, REMOVE_PLAYER, RESET_ALL_SCORES, ADD_SCORE_TO_PLAYER } from '@/stores/game-mutation-types';
+import { SET_RULES, ADD_PLAYER, REMOVE_PLAYER, RESET_ALL_SCORES, ADD_SCORE_TO_PLAYER } from '@/stores/gameMutation.types';
 
 import gameStore from '@/stores/game';
-import defaultRules from '@/util/defaultRules';
+import defaultRules from '@/util/rules.default';
 
 import TestUtils from '../store-test.utils';
 

@@ -7,8 +7,8 @@
         <span v-if="index > 0"> : {{$t('game.score', {score: player.score})}}</span>
       </p>
     </div>
-    <button @click="goToMainMenu">{{$t('game.finish')}}</button>
-    <button @click="restartGame">{{$t('game.restart')}}</button>
+    <button class="btn" @click="goToMainMenu">{{$t('game.finish')}}</button>
+    <button class="btn" @click="restartGame">{{$t('game.restart')}}</button>
   </div>
 </template>
 

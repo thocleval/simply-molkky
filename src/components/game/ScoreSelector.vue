@@ -8,7 +8,7 @@
         :isSelected="selected.includes(number)"
         :number="number"/>
     </div>
-    <button class="btn-validate" @click="validateScore" v-html="$t(okMessage, { score })">{{okMessage}}</button>
+    <button class="btn btn-validate" @click="validateScore" v-html="$t(okMessage, { score })">{{okMessage}}</button>
   </div>
 </template>
 

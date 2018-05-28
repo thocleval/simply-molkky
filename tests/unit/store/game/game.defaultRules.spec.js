@@ -1,6 +1,6 @@
-import { RESET_ALL_SCORES, ADD_SCORE_TO_PLAYER } from '@/stores/game-mutation-types';
+import { RESET_ALL_SCORES, ADD_SCORE_TO_PLAYER } from '@/stores/gameMutation.types';
 import gameStore from '@/stores/game';
-import defaultRules from '@/util/defaultRules';
+import defaultRules from '@/util/rules.default';
 
 const {
   mutations,

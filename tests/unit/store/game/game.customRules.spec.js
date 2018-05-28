@@ -1,6 +1,7 @@
-import { ADD_SCORE_TO_PLAYER } from '@/stores/game-mutation-types';
+import { ADD_SCORE_TO_PLAYER } from '@/stores/gameMutation.types';
 import gameStore from '@/stores/game';
-import defaultRules from '@/util/defaultRules';
+import defaultRules from '@/util/rules.default';
+import rulesTypes from '@/util/rules.types';
 
 const {
   getters,
@@ -40,7 +41,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.sanction = reset] should reset the score after 3 faults', () => {
     const playerIndex = 1;
 
-    state.rules.sanction = 'reset';
+    state.rules.sanction = rulesTypes.SANCTION_RESET;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
@@ -55,7 +56,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.sanction = nothing] should do nothing after 3 faults', () => {
     const playerIndex = 1;
 
-    state.rules.sanction = 'nothing';
+    state.rules.sanction = rulesTypes.SANCTION_NOTHING;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
@@ -80,7 +81,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.penalty = substract] should substract 5 points when over goal', () => {
     const playerIndex = 1;
 
-    state.rules.penalty = 'substract';
+    state.rules.penalty = rulesTypes.PENALTY_SUBSTRACT;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 15 });
 
@@ -90,7 +91,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.penalty = substract, custom amount of penalty] should substract N points when over goal', () => {
     const playerIndex = 1;
 
-    state.rules.penalty = 'substract';
+    state.rules.penalty = rulesTypes.PENALTY_SUBSTRACT;
     state.rules.penaltySubstractAmount = 20;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 15 });
@@ -101,7 +102,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.penalty = substract, large amount of penalty] should limit to 0 the loss of points', () => {
     const playerIndex = 1;
 
-    state.rules.penalty = 'substract';
+    state.rules.penalty = rulesTypes.PENALTY_SUBSTRACT;
     state.rules.penaltySubstractAmount = 200;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 15 });
@@ -112,7 +113,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.penalty = excess] should substract excess points when over goal', () => {
     const playerIndex = 1;
 
-    state.rules.penalty = 'excess';
+    state.rules.penalty = rulesTypes.PENALTY_EXCESS;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 16 });
 
@@ -136,7 +137,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.winCondition = higher] shouldn\'t go back to 25 when exceed 50', () => {
     const playerIndex = 1;
 
-    state.rules.winCondition = 'higher';
+    state.rules.winCondition = rulesTypes.WIN_CONDITION_HIGHER;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 15 });
 
@@ -146,7 +147,7 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.winCondition = higher] should win the game when over 50', () => {
     const playerIndex = 1;
 
-    state.rules.winCondition = 'higher';
+    state.rules.winCondition = rulesTypes.WIN_CONDITION_HIGHER;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 20 });
 
@@ -161,7 +162,7 @@ describe('[Custom rules] Game score gestion', () => {
     const playerAIndex = 2;
     const playerBIndex = 0;
 
-    state.rules.zap = 'half';
+    state.rules.zap = rulesTypes.ZAP_HALF;
 
     mutations[ADD_SCORE_TO_PLAYER](state, { index: playerAIndex, score: 18 });
 
