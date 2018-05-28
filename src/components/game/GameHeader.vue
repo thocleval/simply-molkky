@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import FaultsCounter from "../game/FaultsCounter.vue";
+import FaultsCounter from '../game/FaultsCounter';
 
 export default {
   components: {
@@ -17,12 +17,12 @@ export default {
   props: {
     player: {
       type: Object,
-      requried: true
-    }
+      requried: true,
+    },
   },
   computed: {
-    ...mapState('game', ['rules'])
-  }
+    ...mapState('game', ['rules']),
+  },
 };
 </script>
 

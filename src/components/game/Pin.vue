@@ -9,18 +9,18 @@ export default {
   props: {
     number: {
       type: Number,
-      required: true
+      required: true,
     },
     isSelected: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
-    onClick: function() {
-      this.$emit("pinClicked", this.number);
-    }
-  }
+    onClick() {
+      this.$emit('pinClicked', this.number);
+    },
+  },
 };
 </script>
 

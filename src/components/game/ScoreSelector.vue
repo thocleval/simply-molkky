@@ -14,34 +14,34 @@
 
 
 <script>
-import Pin from "./Pin.vue";
+import Pin from './Pin';
 
 export default {
   components: {
-    Pin
+    Pin,
   },
-  data: function() {
+  data() {
     return {
-      selected: []
+      selected: [],
     };
   },
   computed: {
-    score: function() {
+    score() {
       if (this.selected.length === 1) {
         return this.selected[0];
-      } else {
-        return this.selected.length;
       }
+
+      return this.selected.length;
     },
-    okMessage: function() {
+    okMessage() {
       return this.score > 0
-        ? "game.submit.ok"
-        : "game.submit.missed";
-    }
+        ? 'game.submit.ok'
+        : 'game.submit.missed';
+    },
   },
   methods: {
     onPinClick(number) {
-      var index = this.selected.indexOf(number);
+      const index = this.selected.indexOf(number);
       if (index > -1) {
         this.selected.splice(index, 1);
       } else {
@@ -54,8 +54,8 @@ export default {
     validateScore() {
       this.$emit('validateScore', this.score);
       this.resetScore();
-    }
-  }
+    },
+  },
 };
 </script>
 

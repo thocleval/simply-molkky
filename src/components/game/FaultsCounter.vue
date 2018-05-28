@@ -17,18 +17,18 @@ export default {
   props: {
     faults: {
       type: Number,
-      requried: true
+      requried: true,
     },
     small: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   computed: {
     ...mapState('game', ['rules']),
     faultToDisplay() {
       return Math.max(3, this.faults);
-    }
-  }
+    },
+  },
 };
 </script>
 

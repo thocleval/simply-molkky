@@ -2,27 +2,34 @@
 
 > An app to keep track of scores in a game of Mölkky
 
+## Dependencies
+
+This project need [`@vue/cli`](https://github.com/vuejs/vue-cli) package to be installed globaly. If it's not run the following command :
+``` bash
+yarn global add @vue-cli
+# or using npm
+npm install -g @vue/cli
+```
+
 ## Build Setup
 
 ``` bash
 # install dependencies
-npm install
+yarn install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# serve locally
+yarn serve
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+# build for production
+yarn build
 
 # run unit tests
-npm run unit
+yarn test:unit
 
-# run all tests
-npm test
+# run end to end tests
+yarn test:e2e
 ```
+
 ## //TODO
 
  - Add transition animations between states;

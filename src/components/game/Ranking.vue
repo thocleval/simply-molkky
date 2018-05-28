@@ -12,20 +12,20 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import FaultsCounter from "../game/FaultsCounter.vue";
+import FaultsCounter from '../game/FaultsCounter';
 
 export default {
   components: {
-    FaultsCounter
+    FaultsCounter,
   },
   computed: {
     ...mapGetters('game', ['ranking']),
-  }
+  },
 };
 </script>
 
 <style lang="less">
-@import "../../style/variables";
+@import '../../style/variables';
 
 .wrapper {
   display: flex;

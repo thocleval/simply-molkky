@@ -1,20 +1,15 @@
 import Vue from 'vue';
-
 import App from './App';
-import store from './store';
 import router from './router';
+import store from './store';
 import i18n from './i18n';
+import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
-  i18n,
   store,
-  components: { App },
-  template: '<App/>',
-});
-
-
+  i18n,
+  render: h => h(App),
+}).$mount('#app');
