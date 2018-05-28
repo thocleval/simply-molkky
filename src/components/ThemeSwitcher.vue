@@ -10,25 +10,24 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapMutations } from 'vuex';
-import Themes from "../util/themes";
+import Themes from '../util/themes';
 
 import gradientBackground from '../util/gradientBackground';
 
 export default {
-  mixins: [ gradientBackground ],
+  mixins: [gradientBackground],
   data() {
     return {
-      themes: Themes
+      themes: Themes,
     };
   },
   methods: {
     ...mapMutations('settings', ['setTheme']),
     getThemeStyle(theme) {
       return this.gradientBackground(theme);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -48,4 +47,3 @@ export default {
   }
 }
 </style>
-

@@ -69,7 +69,8 @@ body {
   width: 100%;
   justify-content: space-between;
 
-  button + button {
+  button + button,
+  .button + .button {
     margin-top: 0;
     margin-left: @spacing-small;
   }
@@ -93,7 +94,8 @@ body {
   align-self: stretch;
 }
 
-button {
+button,
+.button {
   position: relative;
   z-index: 0;
   width: 80%;
@@ -106,6 +108,7 @@ button {
   font-weight: @medium-weight;
   text-transform: uppercase;
   outline: none;
+  text-decoration: none;
 
   .responsive(@small-breakpoint, {
     width: 100%;

@@ -12,23 +12,22 @@
 
 <script>
 import Vue from 'vue';
-import { mapMutations, mapState } from 'vuex';
 
 const localeStrings = {
   en: 'English',
-  fr: 'Français'
+  fr: 'Français',
 };
 
 export default {
   data() {
     return {
-      languages: Vue.config.languages
+      languages: Vue.config.languages,
     };
   },
   computed: {
     activeLocale() {
       return this.$i18n.locale;
-    }
+    },
   },
   methods: {
     setLocale(locale) {
@@ -37,8 +36,8 @@ export default {
     },
     getLanguageString(locale) {
       return localeStrings[locale];
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -61,4 +60,3 @@ export default {
   }
 }
 </style>
-
