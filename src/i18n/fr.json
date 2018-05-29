@@ -9,7 +9,8 @@
     "name-placeholder": "Nom du joueur",
     "cancel": "Annuler",
     "start": "Jouer",
-    "max-players": "Nombre maximum de joueurs atteint"
+    "max-players": "Nombre maximum de joueurs atteint",
+    "shuffle": "Mélanger les joueurs"
   },
   "game": {
     "scores": {
@@ -53,6 +54,18 @@
       "label": "Zap! Si un joueur égalise le score d'un joueur X :",
       "nothing": "Il ne se passe rien",
       "half": "Le score du joueur X est divisé par 2"
+    }
+  },
+  "modal": {
+    "sanctions": {
+      "zap": {
+        "title": "!!! Zap !!!",
+        "content": " | <strong>{players}</strong> retombe à {score} points | <strong>{players}</strong> retombent à {score} points"
+      },
+      "eliminated": {
+        "title": "Trop nul !",
+        "content": "<strong>{name}</strong> est éliminé"
+      }
     }
   }
 }

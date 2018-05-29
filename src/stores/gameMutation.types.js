@@ -1,7 +1,9 @@
 export const SET_RULES = 'SET_RULES';
 export const ADD_PLAYER = 'ADD_PLAYER';
+export const REORDER_PLAYERS = 'REORDER_PLAYERS';
 export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 export const REMOVE_ALL_PLAYERS = 'REMOVE_ALL_PLAYERS';
 export const RESET_ALL_SCORES = 'RESET_ALL_SCORES';
-export const ADD_SCORE_TO_PLAYER = 'ADD_SCORE_TO_PLAYER';
-
+export const SET_SCORE = 'SET_SCORE';
+export const SET_FAULT = 'SET_FAULT';
+export const ELIMINATE = 'ELIMINATE';

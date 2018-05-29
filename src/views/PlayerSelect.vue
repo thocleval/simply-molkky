@@ -7,10 +7,16 @@
     </form>
     <p class="max-players" v-if="!canAddPlayers">{{$t('players.max-players')}}</p>
     <div class="scroll-view">
-      <div class="player" v-for="(player, index) in players" :key="index">
-        <p class="name">{{ player.name }}</p>
-        <span @click="removePlayer(index)" class="remove"><i class="icon-cross"></i></span>
-      </div>
+      <draggable v-model="sortedPlayers" :options="{ draggable: '.player', forceFallback: true, handle: '.handle' }" class="draggable-container">
+        <div class="player" v-for="(player, index) in sortedPlayers" :key="index">
+          <div class="handle"><i class="icon icon-handle"></i></div>
+          <p class="name">{{ player.name }}</p>
+          <span @click="removePlayer(index)" class="remove"><i class="icon-cross"></i></span>
+        </div>
+      </draggable>
+    </div>
+    <div class="row center">
+      <button type="button" class="btn-link shuffle" @click="shufflePlayers"><i class="icon icon-shuffle"></i>{{$t('players.shuffle')}}</button>
     </div>
     <div class="row">
       <button class="btn" @click="cancel">{{$t('players.cancel')}}</button>
@@ -21,8 +27,14 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
+import draggable from 'vuedraggable';
+
+import utils from '../util/utils';
 
 export default {
+  components: {
+    draggable,
+  },
   data() {
     return {
       newPlayerName: '',
@@ -31,12 +43,20 @@ export default {
   computed: {
     ...mapState('game', ['players']),
     ...mapGetters('game', ['canAddPlayers']),
+    sortedPlayers: {
+      get() {
+        return this.players;
+      },
+      set(value) {
+        this.reOrderPlayers(value);
+      },
+    },
     isValidateDisabled() {
       return this.players.length < 2;
     },
   },
   methods: {
-    ...mapActions('game', ['addPlayer', 'removePlayer', 'resetAllScores']),
+    ...mapActions('game', ['addPlayer', 'removePlayer', 'resetAllScores', 'reOrderPlayers']),
     onAddPlayer() {
       if (!this.canAddPlayers) {
         return;
@@ -45,6 +65,9 @@ export default {
         this.addPlayer(this.newPlayerName);
         this.newPlayerName = '';
       }
+    },
+    shufflePlayers() {
+      this.sortedPlayers = utils.shuffle(this.sortedPlayers);
     },
     cancel() {
       this.$router.push({ name: 'home' });
@@ -68,7 +91,7 @@ export default {
   flex-grow: 1;
 }
 
-.➕ {
+.➕.➕ {
   align-self: stretch;
   width: 5rem;
   margin: 0;
@@ -76,6 +99,10 @@ export default {
   border-left: none;
   font-size: 4rem;
   font-weight: @light-weight;
+}
+
+.draggable-container {
+  width: 100%;
 }
 
 .max-players {
@@ -90,9 +117,31 @@ export default {
   margin: 0;
   width: 100%;
   flex-shrink: 0;
+  border-bottom: 1px solid @dark-blue;
+  position: relative;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid @dark-blue;
+  &.sortable-ghost {
+    opacity: 0;
+
+    & ~ .player {
+      border-top: 1px solid @dark-blue;
+      border-bottom: 0;
+    }
+  }
+
+  &.sortable-drag.sortable-fallback {
+    border: 0 !important;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .handle {
+    font-size: 2.5rem;
+    margin-left: -1.5rem;
+    padding: .5rem 1.5rem;
+    cursor: pointer;
   }
 
   .name {

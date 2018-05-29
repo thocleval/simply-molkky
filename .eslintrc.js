@@ -14,7 +14,8 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
-    'max-len': 'off'
+    'max-len': 'off',
+    'import/no-extraneous-dependencies': ['error', {'devDependencies': ['**/*.config.js']}],
   },
   parserOptions: {
     parser: 'babel-eslint'

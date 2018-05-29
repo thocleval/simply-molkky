@@ -41,7 +41,7 @@ body {
   max-height: 100%;
   min-height: 75vh;
   padding: @spacing;
-  border-radius: 5px;
+  border-radius: @box-radius;
   width: 45rem;
   max-width: 100%;
   box-shadow: 0px 0px 75px -17px fade(@black, 25%);
@@ -104,7 +104,7 @@ body {
   transition: color @transition-duration ease;
   cursor: pointer;
   color: @dark-blue;
-  font-weight: @medium-weight;
+  font-weight: @regular-weight;
   text-transform: uppercase;
   outline: none;
   text-decoration: none;
@@ -132,6 +132,45 @@ body {
       transform: scale(1);
     }
   }
+
+  &.btn-icon {
+    padding-right: @spacing + .5rem;
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      right: @spacing;
+      transform: translate(50%, -50%);
+    }
+  }
+
+  .icon {
+    margin: 0 .5rem 0 0;
+  }
+}
+
+.btn-link {
+  background: transparent;
+  padding: .2rem;
+  margin: 0;
+  outline: none;
+  color: @dark-blue;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+
+  .icon {
+    margin: 0 .5rem 0 0;
+  }
+}
+
+.icon {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.center {
+  text-align :center;
+  justify-content: center;
 }
 
 .disabled {

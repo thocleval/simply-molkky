@@ -53,17 +53,17 @@
       <div class="rule">
         <p class="rule-label">{{$t("rules.zap.label")}}</p>
         <div class="radio-wrapper">
-          <input type="radio" name="zap" :value="rulesTypes.ZAP_HALF" id="zap-nothing" v-model="tempRules.zap">
+          <input type="radio" name="zap" :value="rulesTypes.ZAP_NOTHING" id="zap-nothing" v-model="tempRules.zap">
           <label for="zap-nothing">{{$t("rules.zap.nothing")}}</label>
         </div>
         <div class="radio-wrapper">
-          <input type="radio" name="zap" :value="rulesTypes.ZAP_NOTHING" id="zap-half" v-model="tempRules.zap">
+          <input type="radio" name="zap" :value="rulesTypes.ZAP_HALF" id="zap-half" v-model="tempRules.zap">
           <label for="zap-half">{{$t("rules.zap.half")}}</label>
         </div>
       </div>
     </div>
     <div class="row">
-      <button class="btn" @click="reset">{{$t('rules.reset')}}</button>
+      <button class="btn" @click="reset"><i class="icon icon-undo"></i> {{$t('rules.reset')}}</button>
       <button class="btn" @click="validate" >{{$t('rules.validate')}}</button>
     </div>
   </div>

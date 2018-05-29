@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 import settings from './stores/settings';
 import game from './stores/game';
+import modal from './stores/modal';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   modules: {
     settings,
     game,
+    modal,
   },
   strict: debug,
   plugins: [createPersistedState()],

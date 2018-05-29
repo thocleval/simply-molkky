@@ -3,12 +3,16 @@ import defaultRules from '../util/rules.default';
 import {
   SET_RULES,
   ADD_PLAYER,
+  REORDER_PLAYERS,
   REMOVE_PLAYER,
   REMOVE_ALL_PLAYERS,
   RESET_ALL_SCORES,
-  ADD_SCORE_TO_PLAYER,
+  SET_SCORE,
+  ELIMINATE,
+  SET_FAULT,
 } from './gameMutation.types';
 import rulesTypes from '../util/rules.types';
+import Utils from '../util/utils';
 
 export const PLAYERS_LIMIT = 16;
 
@@ -65,6 +69,9 @@ export default {
       }
       state.players.push(player);
     },
+    [REORDER_PLAYERS](state, players) {
+      state.players = players;
+    },
     [REMOVE_PLAYER](state, index) {
       state.players.splice(index, 1);
     },
@@ -78,63 +85,23 @@ export default {
         player.isEliminated = false;
       });
     },
-    [ADD_SCORE_TO_PLAYER](state, { index, score }) {
+    [SET_SCORE](state, { index, score }) {
       const currentPlayer = state.players[index];
 
-      if (score === 0) {
-        currentPlayer.fault += 1;
-
-        if (currentPlayer.fault === 3) {
-          switch (state.rules.sanction) {
-            case rulesTypes.SANCTION_ELIMINATED:
-              currentPlayer.isEliminated = true;
-              currentPlayer.score = 0;
-              break;
-            case rulesTypes.SANCTION_RESET:
-              currentPlayer.score = 0;
-              currentPlayer.fault = 0;
-              break;
-            default:
-          }
-        }
-        return;
+      if (score < 0) {
+        score = 0;
       }
 
-      currentPlayer.fault = 0;
-      currentPlayer.score += score;
-
-      if (currentPlayer.score > state.rules.goal && state.rules.winCondition === rulesTypes.WIN_CONDITION_EXACT) {
-        switch (state.rules.penalty) {
-          case rulesTypes.PENALTY_RESET:
-            currentPlayer.score = state.rules.penaltyResetAmount;
-            break;
-          case rulesTypes.PENALTY_SUBSTRACT:
-            currentPlayer.score = currentPlayer.score - score - state.rules.penaltySubstractAmount;
-            break;
-          case rulesTypes.PENALTY_EXCESS:
-            currentPlayer.score = state.rules.goal - (currentPlayer.score - state.rules.goal);
-            break;
-          default:
-        }
-      }
-
-      if (currentPlayer.score < 0) {
-        currentPlayer.score = 0;
-      }
-
-      switch (state.rules.zap) {
-        case rulesTypes.ZAP_HALF:
-          state.players.forEach((player) => {
-            if (player.score === currentPlayer.score && player !== currentPlayer) {
-              player.score = Math.round(player.score / 2);
-            }
-          });
-          break;
-        case rulesTypes.ZAP_RESET:
-          // TODO handle this case
-          break;
-        default:
-      }
+      currentPlayer.score = score;
+    },
+    [SET_FAULT](state, { index, fault }) {
+      const currentPlayer = state.players[index];
+      currentPlayer.fault = fault;
+    },
+    [ELIMINATE](state, { index }) {
+      const currentPlayer = state.players[index];
+      currentPlayer.isEliminated = true;
+      currentPlayer.score = 0;
     },
   },
   actions: {
@@ -146,23 +113,88 @@ export default {
     },
     addPlayer({ commit }, playerName) {
       commit(ADD_PLAYER, {
+        id: Utils.generateID(),
         name: playerName,
         score: 0,
         fault: 0,
         isEliminated: false,
       });
     },
+    reOrderPlayers({ commit }, players) {
+      commit(REORDER_PLAYERS, players);
+    },
     removePlayer({ commit }, index) {
       commit(REMOVE_PLAYER, index);
     },
-    addScoreToPlayer({ commit, state }, { index, score }) {
+    addScoreToPlayer({ dispatch, commit, state }, { index, score }) {
       if (index > state.players.length || index < 0) {
         return;
       }
-      commit(ADD_SCORE_TO_PLAYER, {
-        index,
-        score,
-      });
+
+      const currentPlayer = state.players[index];
+
+      if (score === 0) {
+        commit(SET_FAULT, { index, fault: currentPlayer.fault + 1 });
+
+        if (currentPlayer.fault === 3) {
+          switch (state.rules.sanction) {
+            case rulesTypes.SANCTION_ELIMINATED:
+              commit(SET_SCORE, { index, score: 0 });
+              commit(ELIMINATE, { index });
+              dispatch('modal/showElimination', { name: currentPlayer.name }, { root: true });
+              break;
+            case rulesTypes.SANCTION_RESET:
+              commit(SET_SCORE, { index, score: 0 });
+              commit(SET_FAULT, { index, fault: 0 });
+              break;
+            default:
+          }
+        }
+        return;
+      }
+
+      let newScore = currentPlayer.score + score;
+
+      if (newScore > state.rules.goal && state.rules.winCondition === rulesTypes.WIN_CONDITION_EXACT) {
+        switch (state.rules.penalty) {
+          case rulesTypes.PENALTY_RESET:
+            newScore = state.rules.penaltyResetAmount;
+            break;
+          case rulesTypes.PENALTY_SUBSTRACT:
+            newScore = newScore - score - state.rules.penaltySubstractAmount;
+            break;
+          case rulesTypes.PENALTY_EXCESS:
+            newScore = state.rules.goal - (newScore - state.rules.goal);
+            break;
+          default:
+        }
+      }
+
+      commit(SET_FAULT, { index, fault: 0 });
+      commit(SET_SCORE, { index, score: newScore });
+
+      const zappedPlayers = [];
+      const halfScore = Math.round(newScore / 2);
+      switch (state.rules.zap) {
+        case rulesTypes.ZAP_HALF:
+          state.players.forEach((player, testIndex) => {
+            if (player.score === newScore && player !== currentPlayer) {
+              commit(SET_SCORE, { index: testIndex, score: halfScore });
+              zappedPlayers.push(player);
+            }
+          });
+          if (zappedPlayers.length > 0) {
+            dispatch('modal/showZap', {
+              players: zappedPlayers,
+              score: halfScore,
+            }, { root: true });
+          }
+          break;
+        case rulesTypes.ZAP_RESET:
+          // TODO handle this case
+          break;
+        default:
+      }
     },
     resetAllScores({ commit }) {
       commit(RESET_ALL_SCORES);

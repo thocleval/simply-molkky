@@ -21,6 +21,7 @@
     "vue-cookie": "^1.1.4",
     "vue-i18n": "^7.7.0",
     "vue-router": "^3.0.1",
+    "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
   },
@@ -34,9 +35,13 @@
     "@vue/test-utils": "^1.0.0-beta.16",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^22.4.3",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "google-fonts-webpack-plugin": "^0.4.4",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.16"
+    "style-loader": "^0.21.0",
+    "vue-template-compiler": "^2.5.16",
+    "webfonts-loader": "^4.1.0"
   },
   "browserslist": [
     "> 1%",
