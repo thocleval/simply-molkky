@@ -6,13 +6,13 @@ export default {
     let count = 0;
 
     // mock commit
-    const commit = (type, subPayload) => {
-      const mutation = expectedMutations[count];
+    const commit = (type, resultPayload) => {
+      const expectedMutation = expectedMutations[count];
 
       try {
-        expect(type).toEqual(mutation.type);
-        if (payload) {
-          expect(subPayload).toEqual(mutation.payload);
+        expect(type).toEqual(expectedMutation.type);
+        if (expectedMutation.payload) {
+          expect(resultPayload).toEqual(expectedMutation.payload);
         }
       } catch (error) {
         done(error);
@@ -26,7 +26,7 @@ export default {
     };
 
     // call the action with mocked store and arguments
-    action({ commit, state }, payload);
+    action({ commit, state, dispatch() {} }, payload);
 
     // check if no mutations should have been dispatched
     if (expectedMutations.length === 0) {

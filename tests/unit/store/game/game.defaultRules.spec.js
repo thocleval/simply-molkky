@@ -1,12 +1,15 @@
-import { RESET_ALL_SCORES, ADD_SCORE_TO_PLAYER } from '@/stores/gameMutation.types';
+import { RESET_ALL_SCORES, SET_SCORE, SET_FAULT, ELIMINATE_PLAYER } from '@/stores/gameMutation.types';
 import gameStore from '@/stores/game';
 import defaultRules from '@/util/rules.default';
+import TestUtils from '../store-test.utils';
 
 const {
-  mutations,
-  getters,
-} = gameStore;
+  testAction,
+} = TestUtils;
 
+const {
+  actions,
+} = gameStore;
 
 describe('[Default rules] Game score gestion', () => {
   let state = {};
@@ -37,88 +40,79 @@ describe('[Default rules] Game score gestion', () => {
     };
   });
 
-  it('should reset all scores, fault and elimination', () => {
-    mutations[RESET_ALL_SCORES](state);
-
-    expect(state.players.reduce((totalScore, player) => totalScore + player.score, 0)).toEqual(0);
-    expect(state.players.reduce((totalFault, player) => totalFault + player.fault, 0)).toEqual(0);
-    expect(state.players.reduce((totalEliminated, player) => totalEliminated || player.isEliminated, false)).toEqual(false);
+  it('should reset all scores', (done) => {
+    testAction(
+      actions.resetAllScores,
+      state,
+      state, [
+        { type: RESET_ALL_SCORES },
+      ],
+      done,
+    );
   });
 
-  it('should add simple score', () => {
-    const playerIndex = 1;
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 5 });
-
-    expect(state.players[playerIndex].score).toEqual(45);
+  it('should do nothing if no players', (done) => {
+    testAction(
+      actions.addScoreToPlayer,
+      { index: 1, score: 10 },
+      { players: [] },
+      [],
+      done,
+    );
   });
 
-  it('should add 1 fault when zero score', () => {
-    const playerIndex = 1;
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
+  it('should add simple score', (done) => {
+    const index = 1;
 
-    expect(state.players[playerIndex].score).toEqual(40);
-    expect(state.players[playerIndex].fault).toEqual(1);
+    testAction(
+      actions.addScoreToPlayer,
+      { index, score: 5 },
+      state, [
+        { type: SET_SCORE, payload: { index, score: 45 } },
+      ],
+      done,
+    );
   });
 
-  it('should eliminate after 3 fault', () => {
-    const playerIndex = 1;
+  it('should add 1 fault when zero score', (done) => {
+    const index = 1;
 
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 0 });
-
-    expect(state.players[playerIndex].score).toEqual(0);
-    expect(state.players[playerIndex].fault).toEqual(3);
-    expect(state.players[playerIndex].isEliminated).toEqual(true);
-    expect(getters.remainingPlayers(state)).toEqual(2);
+    testAction(
+      actions.addScoreToPlayer,
+      { index, score: 0 },
+      state, [
+        { type: SET_FAULT, payload: { index, fault: 1 } },
+      ],
+      done,
+    );
   });
 
-  it('should go back to 25 when exceed 50', () => {
-    const playerIndex = 1;
+  it('should eliminate after 3 fault', (done) => {
+    const index = 1;
 
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: playerIndex, score: 15 });
+    state.players[index].fault = 2;
 
-    expect(state.players[playerIndex].score).toEqual(25);
+    testAction(
+      actions.addScoreToPlayer,
+      { index, score: 0 },
+      state, [
+        { type: SET_FAULT, payload: { index, fault: 3 } },
+        { type: ELIMINATE_PLAYER, payload: { index } },
+      ],
+      done,
+    );
   });
 
-  it('shouldn\'t have a winner if no players', () => {
-    state.players = [];
+  it('should go back to 25 when exceed 50', (done) => {
+    const index = 1;
 
-    const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
-
-    expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(false);
-  });
-
-  it('should win the game when 50', () => {
-    const winnerIndex = 1;
-
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: winnerIndex, score: 10 });
-
-    const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
-
-    expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
-    expect(ranking[0]).toEqual(state.players[winnerIndex]);
-  });
-
-  it('should win the game if all opponents eliminated', () => {
-    const winnerIndex = 1;
-    const eliminatedIndexA = 0;
-    const eliminatedIndexB = 2;
-
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: eliminatedIndexA, score: 0 });
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: eliminatedIndexA, score: 0 });
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: eliminatedIndexA, score: 0 });
-
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: eliminatedIndexB, score: 0 });
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: eliminatedIndexB, score: 0 });
-    mutations[ADD_SCORE_TO_PLAYER](state, { index: eliminatedIndexB, score: 0 });
-
-    const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
-
-    expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
-    expect(ranking[0]).toEqual(state.players[winnerIndex]);
+    testAction(
+      actions.addScoreToPlayer,
+      { index, score: 15 },
+      state, [
+        { type: SET_SCORE, payload: { index, score: 25 } },
+      ],
+      done,
+    );
   });
 });

@@ -12,15 +12,12 @@ export default {
     title: {
       type: String,
     },
-    data: {
-      type: Object,
-    },
     content: {
       type: String,
     },
   },
   methods: {
-    close() {
+    validate() {
       this.$emit('validate');
     },
   },

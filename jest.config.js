@@ -5,9 +5,10 @@ module.exports = {
     'json',
     'vue',
   ],
-  coverageDirectory: '<rootDir>/tests/unit/coverage',
+  coverageDirectory: '<rootDir>/tests/coverage/unit',
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
+    '!src/assets/**',
     '!src/main.js',
     '!src/router.js',
     '!src/store.js',

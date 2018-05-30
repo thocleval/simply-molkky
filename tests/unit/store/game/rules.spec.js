@@ -2,8 +2,15 @@ import { SET_RULES } from '@/stores/gameMutation.types';
 import gameStore from '@/stores/game';
 import defaultRules from '@/util/rules.default';
 
+import TestUtils from '../store-test.utils';
+
+const {
+  testAction,
+} = TestUtils;
+
 const {
   mutations,
+  actions,
 } = gameStore;
 
 
@@ -16,7 +23,7 @@ describe('Game rules gestion', () => {
     };
   });
 
-  it('should init state with default rules', () => {
+  it('should init game with default rules', () => {
     const initialState = gameStore.state();
 
     expect(initialState.rules).toEqual(defaultRules);
@@ -53,5 +60,13 @@ describe('Game rules gestion', () => {
     mutations[SET_RULES](state, newRules);
 
     expect(state.rules.penaltySubstractAmount).toEqual(0);
+  });
+
+  it('set rules action should throw mutation', (done) => {
+    testAction(actions.setRules, { goal: 40 }, {}, [{ type: SET_RULES, payload: { goal: 40 } }], done);
+  });
+
+  it('reset rules action should throw mutation', (done) => {
+    testAction(actions.resetRules, null, {}, [{ type: SET_RULES, payload: defaultRules }], done);
   });
 });

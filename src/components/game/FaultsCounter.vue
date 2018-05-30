@@ -24,7 +24,6 @@ export default {
     },
   },
   computed: {
-    ...mapState('game', ['rules']),
     faultToDisplay() {
       return Math.max(3, this.faults);
     },

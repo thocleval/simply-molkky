@@ -6,4 +6,5 @@ export const REMOVE_ALL_PLAYERS = 'REMOVE_ALL_PLAYERS';
 export const RESET_ALL_SCORES = 'RESET_ALL_SCORES';
 export const SET_SCORE = 'SET_SCORE';
 export const SET_FAULT = 'SET_FAULT';
-export const ELIMINATE = 'ELIMINATE';
+export const ELIMINATE_PLAYER = 'ELIMINATE_PLAYER';
+export const RESET_PLAYER = 'RESET_PLAYER';
