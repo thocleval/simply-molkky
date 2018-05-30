@@ -38,4 +38,4 @@ yarn test:e2e
  - Add tests;
  - Add a deployment pipeline;
  - Find more emojis for css selectors;
- - turn this into an app (PWA why not).
+ - ~~turn this into an app (PWA why not).~~
