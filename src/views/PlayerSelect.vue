@@ -7,13 +7,13 @@
     </form>
     <p class="max-players" v-if="!canAddPlayers">{{$t('players.max-players')}}</p>
     <div class="scroll-view">
-      <draggable v-model="sortedPlayers" :options="{ draggable: '.player', forceFallback: true, handle: '.handle' }" class="draggable-container">
+      <VueDraggable v-model="sortedPlayers" :options="{ draggable: '.player', forceFallback: true, handle: '.handle' }" class="draggable-container">
         <div class="player" v-for="(player, index) in sortedPlayers" :key="index">
           <div class="handle"><AppIcon icon="handle" /></div>
           <p class="name">{{ player.name }}</p>
           <span @click="removePlayer(index)" class="remove"><AppIcon icon="cross" /></span>
         </div>
-      </draggable>
+      </VueDraggable>
     </div>
     <div class="row center">
       <button type="button" class="btn-link shuffle" @click="shufflePlayers"><AppIcon icon="shuffle" />{{$t('players.shuffle')}}</button>
@@ -27,14 +27,14 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import draggable from 'vuedraggable';
+import VueDraggable from 'vuedraggable';
 
 import utils from '@/util/utils';
 import AppIcon from '@/components/AppIcon';
 
 export default {
   components: {
-    draggable,
+    VueDraggable,
     AppIcon,
   },
   data() {
@@ -82,7 +82,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import '~@/style/variables';
 
 .📝 {

@@ -1,7 +1,7 @@
 <template>
   <div id="app" :style="gradientBackground(theme)">
     <router-view></router-view>
-    <modal-container></modal-container>
+    <AppModalContainer />
   </div>
 </template>
 
@@ -9,11 +9,11 @@
 import { mapState } from 'vuex';
 
 import gradientBackground from './util/gradientBackground';
-import ModalContainer from './components/ModalContainer';
+import AppModalContainer from './components/AppModalContainer';
 
 export default {
   components: {
-    ModalContainer,
+    AppModalContainer,
   },
   mixins: [gradientBackground],
   computed: {

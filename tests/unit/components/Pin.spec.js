@@ -1,12 +1,12 @@
-import Pin from '@/components/game/Pin';
+import GamePin from '@/components/game/GamePin';
 
 import { mount } from '@vue/test-utils';
 
-describe('Pin.vue', () => {
+describe('GamePin.vue', () => {
   let cmp;
 
   beforeEach(() => {
-    cmp = mount(Pin, {
+    cmp = mount(GamePin, {
       propsData: {
         number: 12,
         isSelected: false,

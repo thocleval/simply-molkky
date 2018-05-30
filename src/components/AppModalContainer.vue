@@ -1,17 +1,21 @@
 <template>
   <div class="modal-container" :class="{visible: isVisible}">
     <div class="backdrop" @click="hide"></div>
-    <modal :title="title" :content="content" @validate="hide" />
+    <AppModal
+      :title="title"
+      :content="content"
+      @validate="hide"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import Modal from './Modal';
+import AppModal from './AppModal';
 
 export default {
   components: {
-    Modal,
+    AppModal,
   },
   computed: {
     ...mapState('modal', ['isVisible', 'title', 'content']),

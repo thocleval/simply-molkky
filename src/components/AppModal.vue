@@ -19,9 +19,6 @@ export default {
       type: String,
     },
   },
-  computed: {
-
-  },
   methods: {
     close() {
       this.$emit('validate');
@@ -30,7 +27,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import '~@/style/variables';
 .ℹ️ {
   padding: @spacing;

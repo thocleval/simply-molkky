@@ -3,7 +3,10 @@
     <div v-for="(player, index) in ranking" :key="index" class="wrapper" :class="{ eliminated: player.isEliminated }">
       <p class="rank">{{ index + 1 }}</p>
       <p class="name">{{ player.name }}</p>
-      <FaultsCounter :faults="player.fault" small/>
+      <FaultsCounter
+        :faults="player.fault"
+        small
+      />
       <p class="points">{{player.score}}</p>
     </div>
   </div>
@@ -24,7 +27,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import '~@/style/variables';
 
 .wrapper {

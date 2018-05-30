@@ -1,12 +1,13 @@
 <template>
   <div class="score-selector">
     <div class="pins">
-      <Pin
+      <GamePin
         v-for="number in 12"
         :key="number"
         @pinClicked="onPinClick"
-        :isSelected="selected.includes(number)"
-        :number="number"/>
+        :is-selected="selected.includes(number)"
+        :number="number"
+      />
     </div>
     <button class="btn btn-validate" @click="validateScore" v-html="$t(okMessage, { score })">{{okMessage}}</button>
   </div>
@@ -14,11 +15,11 @@
 
 
 <script>
-import Pin from './Pin';
+import GamePin from './GamePin';
 
 export default {
   components: {
-    Pin,
+    GamePin,
   },
   data() {
     return {

@@ -90,6 +90,9 @@ export default {
       return this.tempRules.winCondition !== rulesTypes.WIN_CONDITION_EXACT;
     },
   },
+  mounted() {
+    this.tempRules = Object.assign({}, this.rules);
+  },
   methods: {
     ...mapActions('game', ['setRules', 'resetRules']),
     reset() {
@@ -101,14 +104,11 @@ export default {
       this.$router.push({ name: 'home' });
     },
   },
-  mounted() {
-    this.tempRules = Object.assign({}, this.rules);
-  },
 };
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 @import '~@/style/variables';
 
 .rule {

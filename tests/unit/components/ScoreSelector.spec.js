@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import ScoreSelector from '@/components/game/ScoreSelector';
-import Pin from '@/components/game/Pin';
+import GamePin from '@/components/game/GamePin';
 import en from '@/i18n/en.json';
 import {
   mount,
@@ -33,13 +33,13 @@ describe('ScoreSelector.vue', () => {
       i18n,
     });
 
-    expect(cmp.findAll(Pin).length).toEqual(12);
+    expect(cmp.findAll(GamePin).length).toEqual(12);
   });
 
   it('pin event pinClicked should trigger onPinClick', async () => {
     const spy = jest.spyOn(ScoreSelector.methods, 'onPinClick');
     cmp = mount(ScoreSelector, { i18n });
-    const pins = cmp.findAll(Pin);
+    const pins = cmp.findAll(GamePin);
 
     pins.at(0).vm.$emit('pinClicked', 5);
 

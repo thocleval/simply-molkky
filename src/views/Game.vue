@@ -1,9 +1,9 @@
 <template>
   <div class="🖼">
-    <game-header :player="currentPlayer" />
-    <score-selector @validateScore="addScore" />
+    <GameHeader :player="currentPlayer" />
+    <ScoreSelector @validateScore="addScore" />
     <h2 class="medium-title">{{$t('game.scores.title')}}</h2>
-    <ranking />
+    <GameRanking />
   </div>
 </template>
 
@@ -11,12 +11,12 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import ScoreSelector from '@/components/game/ScoreSelector';
 import GameHeader from '@/components/game/GameHeader';
-import Ranking from '@/components/game/Ranking';
+import GameRanking from '@/components/game/GameRanking';
 
 export default {
   components: {
     ScoreSelector,
-    Ranking,
+    GameRanking,
     GameHeader,
   },
   data() {
