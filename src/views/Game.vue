@@ -9,9 +9,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import ScoreSelector from '../components/game/ScoreSelector';
-import GameHeader from '../components/game/GameHeader';
-import Ranking from '../components/game/Ranking';
+import ScoreSelector from '@/components/game/ScoreSelector';
+import GameHeader from '@/components/game/GameHeader';
+import Ranking from '@/components/game/Ranking';
 
 export default {
   components: {
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../style/variables";
+@import '~@/style/variables';
 .turn {
   .player-name {
     font-weight: @bold-weight;
@@ -63,7 +63,7 @@ export default {
 }
 </style>
 <style lang="less" scoped>
-@import "../style/variables";
+@import '~@/style/variables';
 .wrapper-title {
   display: flex;
   width: 100%;

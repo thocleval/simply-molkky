@@ -2,7 +2,6 @@ import Pin from '@/components/game/Pin';
 
 import { mount } from '@vue/test-utils';
 
-
 describe('Pin.vue', () => {
   let cmp;
 

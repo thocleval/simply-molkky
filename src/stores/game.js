@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
-import defaultRules from '../util/rules.default';
+import defaultRules from '@/util/rules.default';
+import rulesTypes from '@/util/rules.types';
+import Utils from '@/util/utils';
 import {
   SET_RULES,
   ADD_PLAYER,
@@ -11,8 +13,6 @@ import {
   ELIMINATE,
   SET_FAULT,
 } from './gameMutation.types';
-import rulesTypes from '../util/rules.types';
-import Utils from '../util/utils';
 
 export const PLAYERS_LIMIT = 16;
 

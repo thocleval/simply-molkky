@@ -1,21 +1,23 @@
 <template>
   <div class="🖼 auto-height">
     <h1 class="main-title">{{$t('main-menu.title')}}</h1>
-    <router-link class="btn btn-icon" to="/player-select"><i class="icon icon-play"></i> {{$t('main-menu.start')}}</router-link>
-    <router-link class="btn btn-icon" to="/rules"><i class="icon icon-rules"></i> {{$t('main-menu.rules')}}</router-link>
+    <router-link class="btn btn-icon" to="/player-select"><AppIcon icon="play" /> {{$t('main-menu.start')}}</router-link>
+    <router-link class="btn btn-icon" to="/rules"><AppIcon icon="rules" /> {{$t('main-menu.rules')}}</router-link>
     <language-switcher />
     <theme-switcher />
   </div>
 </template>
 
 <script>
-import LanguageSwitcher from '../components/LanguageSwitcher';
-import ThemeSwitcher from '../components/ThemeSwitcher';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import AppIcon from '@/components/AppIcon';
 
 export default {
   components: {
     LanguageSwitcher,
     ThemeSwitcher,
+    AppIcon,
   },
   methods: {
     getThemeStyle(theme) {
@@ -26,7 +28,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../style/variables";
+@import '~@/style/variables';
 
 .🌐 {
   margin-top: @spacing;

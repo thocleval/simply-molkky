@@ -9,14 +9,14 @@
     <div class="scroll-view">
       <draggable v-model="sortedPlayers" :options="{ draggable: '.player', forceFallback: true, handle: '.handle' }" class="draggable-container">
         <div class="player" v-for="(player, index) in sortedPlayers" :key="index">
-          <div class="handle"><i class="icon icon-handle"></i></div>
+          <div class="handle"><AppIcon icon="handle" /></div>
           <p class="name">{{ player.name }}</p>
-          <span @click="removePlayer(index)" class="remove"><i class="icon-cross"></i></span>
+          <span @click="removePlayer(index)" class="remove"><AppIcon icon="cross" /></span>
         </div>
       </draggable>
     </div>
     <div class="row center">
-      <button type="button" class="btn-link shuffle" @click="shufflePlayers"><i class="icon icon-shuffle"></i>{{$t('players.shuffle')}}</button>
+      <button type="button" class="btn-link shuffle" @click="shufflePlayers"><AppIcon icon="shuffle" />{{$t('players.shuffle')}}</button>
     </div>
     <div class="row">
       <button class="btn" @click="cancel">{{$t('players.cancel')}}</button>
@@ -29,11 +29,13 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
 
-import utils from '../util/utils';
+import utils from '@/util/utils';
+import AppIcon from '@/components/AppIcon';
 
 export default {
   components: {
     draggable,
+    AppIcon,
   },
   data() {
     return {
@@ -81,7 +83,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../style/variables";
+@import '~@/style/variables';
 
 .📝 {
   padding: @spacing-small;
@@ -156,6 +158,10 @@ export default {
     padding: .6rem @spacing-small;
     margin: 0;
     margin-right: -@spacing-small;
+
+    .icon {
+      font-size: 2rem;
+    }
   }
 }
 </style>

@@ -23,10 +23,9 @@ export default {
 </script>
 
 <style lang="less">
-@import './style/variables';
-@import './style/mixins';
-@import './style/main';
-@import './style/icons';
+@import '~@/style/variables';
+@import '~@/style/mixins';
+@import '~@/style/main';
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700.css');
 
 </style>

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import gradientBackground from '../util/gradientBackground';
-import Themes from '../util/themes';
+import gradientBackground from '@/util/gradientBackground';
+import Themes from '@/util/themes';
 
 export default {
   namespaced: true,

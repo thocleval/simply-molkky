@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '../style/variables';
+@import '~@/style/variables';
 .ℹ️ {
   padding: @spacing;
   width: 42rem;

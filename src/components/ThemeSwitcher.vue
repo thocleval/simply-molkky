@@ -11,9 +11,9 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import Themes from '../util/themes';
+import Themes from '@/util/themes';
 
-import gradientBackground from '../util/gradientBackground';
+import gradientBackground from '@/util/gradientBackground';
 
 export default {
   mixins: [gradientBackground],

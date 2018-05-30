@@ -12,7 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import FaultsCounter from '../game/FaultsCounter';
+import FaultsCounter from './FaultsCounter';
 
 export default {
   components: {
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../style/variables';
+@import '~@/style/variables';
 
 .wrapper {
   display: flex;

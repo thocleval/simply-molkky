@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="row">
-      <button class="btn" @click="reset"><i class="icon icon-undo"></i> {{$t('rules.reset')}}</button>
+      <button class="btn" @click="reset"><AppIcon icon="undo" /> {{$t('rules.reset')}}</button>
       <button class="btn" @click="validate" >{{$t('rules.validate')}}</button>
     </div>
   </div>
@@ -71,9 +71,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import rulesTypes from '../util/rules.types';
+import rulesTypes from '@/util/rules.types';
+import AppIcon from '@/components/AppIcon';
 
 export default {
+  components: {
+    AppIcon,
+  },
   data() {
     return {
       tempRules: {},
@@ -105,7 +109,7 @@ export default {
 
 
 <style lang="less">
-@import "../style/variables";
+@import '~@/style/variables';
 
 .rule {
   text-align: left;

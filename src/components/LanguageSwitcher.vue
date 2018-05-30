@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../style/variables';
+@import '~@/style/variables';
 
 .🌐 {
   display: flex;

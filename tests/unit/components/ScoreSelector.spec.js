@@ -8,7 +8,6 @@ import {
   shallowMount,
 } from '@vue/test-utils';
 
-
 const messages = {
   en,
 };

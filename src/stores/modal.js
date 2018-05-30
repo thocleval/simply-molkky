@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
+import i18n from '@/i18n';
+import Utils from '@/util/utils';
+
 import {
   SHOW,
   HIDE,
 } from './modalMutation.types';
-
-import i18n from '../i18n';
-import Utils from '../util/utils';
 
 export default {
   namespaced: true,
