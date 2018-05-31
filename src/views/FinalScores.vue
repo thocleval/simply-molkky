@@ -1,5 +1,5 @@
 <template>
-  <div class="🖼 auto-height">
+  <div class="🖼 vertical-container auto-height">
 
     <div v-for="(player, index) in ranking" :key="index">
       <p class="ranking" :class="{ first: index === 0, second: index === 1, third: index === 2 }">

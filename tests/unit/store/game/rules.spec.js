@@ -43,6 +43,7 @@ describe('Game rules gestion', () => {
   it('should reset penaltyResetAmount if over goal', () => {
     const newRules = {
       goal: 20,
+      penaltySubstractAmount: 10,
       penaltyResetAmount: 50,
     };
 
@@ -55,6 +56,7 @@ describe('Game rules gestion', () => {
     const newRules = {
       goal: 20,
       penaltySubstractAmount: 50,
+      penaltyResetAmount: 10,
     };
 
     mutations[SET_RULES](state, newRules);

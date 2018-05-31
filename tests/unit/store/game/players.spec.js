@@ -51,12 +51,12 @@ describe('Game players gestion', () => {
 
   it('should remove a player', () => {
     state.players = [
-      { name: 'Michel' },
-      { name: 'Jaqueline' },
-      { name: 'José' },
+      { id: 'id-1', name: 'Michel' },
+      { id: 'id-2', name: 'Jaqueline' },
+      { id: 'id-3', name: 'José' },
     ];
 
-    mutations[REMOVE_PLAYER](state, 1);
+    mutations[REMOVE_PLAYER](state, 'id-2');
 
     expect(state.players.length).toEqual(2);
     expect(state.players[1].name).not.toEqual('Jaqueline');
@@ -115,6 +115,24 @@ describe('Game players gestion', () => {
       {},
       [
         { type: SET_PLAYERS, payload: players },
+      ],
+      done,
+    );
+  });
+
+  it('shuffle players should throw mutation', (done) => {
+    state.players = [
+      { id: 'id-1', name: 'Michel' },
+      { id: 'id-2', name: 'Jaqueline' },
+      { id: 'id-3', name: 'José' },
+    ];
+
+    testAction(
+      actions.shufflePlayers,
+      {},
+      state,
+      [
+        { type: SET_PLAYERS },
       ],
       done,
     );

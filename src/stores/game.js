@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import defaultRules from '@/util/rules.default';
 import rulesTypes from '@/util/rules.types';
+import utils from '@/util/utils';
 import {
   SET_RULES,
   ADD_PLAYER,
@@ -12,6 +13,7 @@ import {
   ELIMINATE_PLAYER,
   SET_FAULT,
   RESET_PLAYER,
+  SET_ELIMINATED,
 } from './gameMutation.types';
 
 export const PLAYERS_LIMIT = 16;
@@ -25,6 +27,7 @@ export default {
     };
   },
   getters: {
+    playersCount: ({ players }) => players.length,
     canAddPlayers: ({ players }) => players.length < PLAYERS_LIMIT,
     ranking: ({ players }) => players.concat().sort((a, b) => b.score - a.score),
     remainingPlayers({ players }) {
@@ -68,6 +71,7 @@ export default {
         return;
       }
       const player = {
+        id: utils.generateID(),
         name,
         score: 0,
         fault: 0,
@@ -78,8 +82,9 @@ export default {
     [SET_PLAYERS](state, players) {
       state.players = players;
     },
-    [REMOVE_PLAYER](state, index) {
-      state.players.splice(index, 1);
+    [REMOVE_PLAYER](state, id) {
+      const indexToRemove = state.players.findIndex(player => player.id === id);
+      state.players.splice(indexToRemove, 1);
     },
     [REMOVE_ALL_PLAYERS](state) {
       state.players = [];
@@ -91,8 +96,8 @@ export default {
         player.isEliminated = false;
       });
     },
-    [SET_SCORE](state, { index, score, keepFault = false }) {
-      const currentPlayer = state.players[index];
+    [SET_SCORE](state, { id, score, keepFault = false }) {
+      const currentPlayer = state.players.find(player => player.id === id);
 
       if (score < 0) {
         score = 0;
@@ -104,17 +109,26 @@ export default {
 
       currentPlayer.score = score;
     },
-    [SET_FAULT](state, { index, fault }) {
-      const currentPlayer = state.players[index];
+    [SET_FAULT](state, { id, fault }) {
+      const currentPlayer = state.players.find(player => player.id === id);
+
+      if (fault < 0) {
+        fault = 0;
+      }
+
       currentPlayer.fault = fault;
     },
-    [ELIMINATE_PLAYER](state, { index }) {
-      const currentPlayer = state.players[index];
+    [SET_ELIMINATED](state, { id, isEliminated }) {
+      const currentPlayer = state.players.find(player => player.id === id);
+      currentPlayer.isEliminated = isEliminated;
+    },
+    [ELIMINATE_PLAYER](state, { id }) {
+      const currentPlayer = state.players.find(player => player.id === id);
       currentPlayer.score = 0;
       currentPlayer.isEliminated = true;
     },
-    [RESET_PLAYER](state, { index }) {
-      const currentPlayer = state.players[index];
+    [RESET_PLAYER](state, { id }) {
+      const currentPlayer = state.players.find(player => player.id === id);
       currentPlayer.score = 0;
       currentPlayer.fault = 0;
     },
@@ -129,34 +143,37 @@ export default {
     addPlayer({ commit }, playerName) {
       commit(ADD_PLAYER, playerName);
     },
-    removePlayer({ commit }, index) {
-      commit(REMOVE_PLAYER, index);
+    removePlayer({ commit }, id) {
+      commit(REMOVE_PLAYER, id);
     },
     reOrderPlayers({ commit }, players) {
+      commit(SET_PLAYERS, players);
+    },
+    shufflePlayers({ commit, state }) {
+      const players = utils.shuffle(state.players);
       commit(SET_PLAYERS, players);
     },
     resetAllScores({ commit }) {
       commit(RESET_ALL_SCORES);
     },
-    addScoreToPlayer({ dispatch, commit, state }, { index, score }) {
-      if (index > state.players.length || index < 0) {
+    addScoreToPlayer({ dispatch, commit, state }, { id, score }) {
+      const currentPlayer = state.players.find(player => player.id === id);
+      if (!currentPlayer) {
         return;
       }
 
-      const currentPlayer = state.players[index];
-
       if (score === 0) {
         const faults = currentPlayer.fault + 1;
-        commit(SET_FAULT, { index, fault: faults });
+        commit(SET_FAULT, { id, fault: faults });
 
-        if (faults === 3) {
+        if (faults >= 3) {
           switch (state.rules.sanction) {
             case rulesTypes.SANCTION_ELIMINATED:
-              commit(ELIMINATE_PLAYER, { index });
+              commit(ELIMINATE_PLAYER, { id });
               dispatch('modal/showElimination', { name: currentPlayer.name }, { root: true });
               break;
             case rulesTypes.SANCTION_RESET:
-              commit(RESET_PLAYER, { index });
+              commit(RESET_PLAYER, { id });
               break;
             default:
           }
@@ -181,15 +198,15 @@ export default {
         }
       }
 
-      commit(SET_SCORE, { index, score: newScore });
+      commit(SET_SCORE, { id, score: newScore });
 
       const zappedPlayers = [];
       const halfScore = Math.round(newScore / 2);
       switch (state.rules.zap) {
         case rulesTypes.ZAP_HALF:
-          state.players.forEach((player, testIndex) => {
+          state.players.forEach((player) => {
             if (player.score === newScore && player !== currentPlayer) {
-              commit(SET_SCORE, { index: testIndex, score: halfScore, keepFault: true });
+              commit(SET_SCORE, { id: player.id, score: halfScore, keepFault: true });
               zappedPlayers.push(player);
             }
           });
@@ -200,9 +217,9 @@ export default {
             }, { root: true });
           }
           break;
-        case rulesTypes.ZAP_RESET:
-          // TODO handle this case
-          break;
+        // case rulesTypes.ZAP_RESET:
+        //   // TODO handle this case
+        //   break;
         default:
       }
     },
