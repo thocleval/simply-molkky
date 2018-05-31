@@ -29,9 +29,12 @@ export default {
   getters: {
     playersCount: ({ players }) => players.length,
     canAddPlayers: ({ players }) => players.length < PLAYERS_LIMIT,
-    ranking: ({ players }) => players.concat().sort((a, b) => b.score - a.score),
-    remainingPlayers({ players }) {
-      return players.filter(player => !player.isEliminated).length;
+    ranking: ({ players }) => players.concat()
+      .filter(player => player.isEliminated === false)
+      .sort((a, b) => b.score - a.score),
+    eliminateds: ({ players }) => players.concat().filter(player => player.isEliminated === true),
+    remainingPlayers(state, { ranking }) {
+      return ranking.length;
     },
     hasWinner({ rules, players }, { remainingPlayers, ranking }) {
       if (players.length <= 0) {

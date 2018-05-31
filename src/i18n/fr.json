@@ -14,7 +14,8 @@
   },
   "game": {
     "scores": {
-      "title": "Scores"
+      "title": "Scores",
+      "eliminated": "éliminés"
     },
     "turn": "À <span class=\"player-name\">{name}</span> de jouer",
     "submit": {
