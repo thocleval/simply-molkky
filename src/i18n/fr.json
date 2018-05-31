@@ -57,6 +57,7 @@
     }
   },
   "modal": {
+    "validate": "ok",
     "sanctions": {
       "zap": {
         "title": "!!! Zap !!!",
@@ -66,6 +67,14 @@
         "title": "Trop nul !",
         "content": "<strong>{name}</strong> est éliminé"
       }
+    }
+  },
+  "player-edition": {
+    "title": "Modifiation de <strong>{name}</strong>",
+    "fields": {
+      "fault": "Fautes : ",
+      "score": "Score : ",
+      "eliminated": "éliminé"
     }
   }
 }

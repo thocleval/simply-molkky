@@ -18,18 +18,21 @@ describe('[Default rules] Game score gestion', () => {
     state = {
       players: [
         {
+          id: 'michel',
           name: 'Michel',
           score: 20,
           fault: 0,
           isEliminated: false,
         },
         {
+          id: 'jacqueline',
           name: 'Jaqueline',
           score: 40,
           fault: 0,
           isEliminated: false,
         },
         {
+          id: 'jose',
           name: 'José',
           score: 2,
           fault: 0,
@@ -54,7 +57,7 @@ describe('[Default rules] Game score gestion', () => {
   it('should do nothing if no players', (done) => {
     testAction(
       actions.addScoreToPlayer,
-      { index: 1, score: 10 },
+      { id: 'id-de-test', score: 10 },
       { players: [] },
       [],
       done,
@@ -63,12 +66,15 @@ describe('[Default rules] Game score gestion', () => {
 
   it('should add simple score', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 5 },
+      { id, score: 5 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 45 } },
+        { type: SET_SCORE, payload: { id, score: 45 } },
       ],
       done,
     );
@@ -76,12 +82,15 @@ describe('[Default rules] Game score gestion', () => {
 
   it('should add 1 fault when zero score', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 0 },
+      { id, score: 0 },
       state, [
-        { type: SET_FAULT, payload: { index, fault: 1 } },
+        { type: SET_FAULT, payload: { id, fault: 1 } },
       ],
       done,
     );
@@ -89,15 +98,18 @@ describe('[Default rules] Game score gestion', () => {
 
   it('should eliminate after 3 fault', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.players[index].fault = 2;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 0 },
+      { id, score: 0 },
       state, [
-        { type: SET_FAULT, payload: { index, fault: 3 } },
-        { type: ELIMINATE_PLAYER, payload: { index } },
+        { type: SET_FAULT, payload: { id, fault: 3 } },
+        { type: ELIMINATE_PLAYER, payload: { id } },
       ],
       done,
     );
@@ -105,12 +117,15 @@ describe('[Default rules] Game score gestion', () => {
 
   it('should go back to 25 when exceed 50', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 15 },
+      { id, score: 15 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 25 } },
+        { type: SET_SCORE, payload: { id, score: 25 } },
       ],
       done,
     );

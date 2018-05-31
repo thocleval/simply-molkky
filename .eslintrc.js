@@ -15,6 +15,7 @@ module.exports = {
       vue: 'never'
     }],
     'max-len': 'off',
+    'no-param-reassign': 'off',
     'import/no-extraneous-dependencies': ['error', {'devDependencies': ['**/*.config.js']}],
   },
   parserOptions: {

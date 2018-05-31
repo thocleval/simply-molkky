@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-view score-display">
-    <div v-for="(player, index) in ranking" :key="index" class="wrapper" :class="{ eliminated: player.isEliminated }">
+    <div v-for="(player, index) in ranking" :key="player.id" class="wrapper" :class="{ eliminated: player.isEliminated }" v-long-press="700" @long-press="openEditionModal(player.id)">
       <p class="rank">{{ index + 1 }}</p>
       <p class="name">{{ player.name }}</p>
       <FaultsCounter
@@ -14,7 +14,7 @@
 
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import FaultsCounter from './FaultsCounter';
 
 export default {
@@ -23,6 +23,12 @@ export default {
   },
   computed: {
     ...mapGetters('game', ['ranking']),
+  },
+  methods: {
+    ...mapActions('modal', ['showPlayerEditor']),
+    openEditionModal(id) {
+      this.showPlayerEditor(id);
+    },
   },
 };
 </script>

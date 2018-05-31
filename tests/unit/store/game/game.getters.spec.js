@@ -41,6 +41,12 @@ describe('Game mutations', () => {
     };
   });
 
+  it('should count the players', () => {
+    const count = getters.playersCount(state);
+
+    expect(count).toEqual(4);
+  });
+
   it('should order correctly the ranking', () => {
     const ranking = getters.ranking(state);
 
@@ -106,6 +112,17 @@ describe('Game mutations', () => {
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
     expect(ranking[0]).toEqual(state.players[winnerIndex]);
+  });
+
+  it('[Custom win condition] shouldn\'t have a winner when no winCondition', () => {
+    const winnerIndex = 1;
+    state.rules.winCondition = undefined;
+    state.players[winnerIndex].score = state.rules.goal;
+
+    const ranking = getters.ranking(state);
+    const remainingPlayers = getters.remainingPlayers(state);
+
+    expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(false);
   });
 
   it('should have a winner when one remaining player', () => {

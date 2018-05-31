@@ -1,5 +1,5 @@
 <template>
-  <div class="🖼 auto-height">
+  <div class="🖼 vertical-container auto-height">
     <h1 class="main-title">{{$t('main-menu.title')}}</h1>
     <router-link class="btn btn-icon" to="/player-select"><AppIcon icon="play" /> {{$t('main-menu.start')}}</router-link>
     <router-link class="btn btn-icon" to="/rules"><AppIcon icon="rules" /> {{$t('main-menu.rules')}}</router-link>
