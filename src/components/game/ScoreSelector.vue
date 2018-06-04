@@ -64,17 +64,19 @@ export default {
 @import '~@/style/variables';
 .score-selector {
   width: 100%;
+  margin-top: .5rem;
 }
 
 .pins {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
-  grid-gap: .5rem;
+  grid-template-columns: repeat(8, minmax(1rem, 1fr));
+  grid-gap: 0 .5rem;
   max-width: 80%;
   margin: auto;
+  align-items: flex-end;
 
   .🎳 {
-    margin-top: -15%;
+    margin-top: -5%;
     width: auto;
     grid-column-end: span 2;
     grid-row-end: span 2;
