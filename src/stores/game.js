@@ -220,9 +220,6 @@ export default {
             }, { root: true });
           }
           break;
-        // case rulesTypes.ZAP_RESET:
-        //   // TODO handle this case
-        //   break;
         default:
       }
     },
