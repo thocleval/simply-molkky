@@ -15,7 +15,7 @@
   "game": {
     "scores": {
       "title": "Scores",
-      "eliminated": "Eliminateds"
+      "eliminated": "Eliminated players"
     },
     "turn": "<span class=\"player-name\">{name}</span>'s turn",
     "submit": {
@@ -66,16 +66,16 @@
       },
       "eliminated": {
         "title": "Booooh !",
-        "content": "<strong>{name}</strong> is eliminate"
+        "content": "<strong>{name}</strong> has been eliminated"
       }
     }
   },
   "player-edition": {
-    "title": "<strong>{name}</strong> update",
+    "title": "<strong>{name}</strong> updated",
     "fields": {
       "fault": "Faults : ",
       "score": "Score : ",
-      "eliminated": "eliminate"
+      "eliminate": "eliminate"
     }
   }
 }

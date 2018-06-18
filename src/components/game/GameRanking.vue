@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-view score-display">
-    <div class="ranking">
+    <transition-group name="ranking" tag="div" class="ranking">
       <div v-for="(player, index) in ranking" :key="player.id" class="ranking-item" v-long-press="700" @long-press="openEditionModal(player.id)">
         <p class="rank">{{ index + 1 }}</p>
         <p class="name">{{ player.name }}</p>
@@ -10,7 +10,7 @@
         />
         <p class="points">{{player.score}}</p>
       </div>
-    </div>
+    </transition-group>
     <h4 class="eliminated-title" v-if="eliminateds.length > 0">{{$t('game.scores.eliminated')}}</h4>
     <div class="eliminateds">
       <div v-for="(player) in eliminateds" :key="player.id" class="eliminated" v-long-press="700" @long-press="openEditionModal(player.id)">{{ player.name }}</div>
@@ -42,6 +42,12 @@ export default {
 <style lang="less" scoped>
 @import '~@/style/variables';
 
+.ranking-move {
+  transition-duration: @transition-duration;
+  transition-timing-function: ease;
+  transition-property: transform;
+}
+
 .eliminated-title {
   margin-top: @spacing-small;
   font-weight: @bold-weight;
@@ -63,9 +69,10 @@ export default {
     width: 100%;
     padding: @spacing-small 0;
     align-items: center;
+    border-bottom: 1px solid @dark-blue;
 
-    &:not(:last-child) {
-      border-bottom: 1px solid @dark-blue;
+    &:last-child {
+      border-bottom: 1px solid transparent;
     }
 
     .rank {

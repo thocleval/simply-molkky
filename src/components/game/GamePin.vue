@@ -31,7 +31,7 @@ export default {
   border-radius: 50%;
   position: relative;
   transition-property: color background-color border-color;
-  transition-duration: @transition-duration * 2;
+  transition-duration: @transition-duration;
   transition-timing-function: ease;
   font-size: 2rem;
   font-weight: @light-weight;

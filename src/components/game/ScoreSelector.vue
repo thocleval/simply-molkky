@@ -1,13 +1,16 @@
 <template>
   <div class="score-selector">
-    <div class="pins">
+    <transition-group name="pins-transition" appear tag="div" class="pins">
       <GamePin
-        v-for="number in 12"
+        v-for="(number, index) in 12"
+        :data-index="index"
         :key="number"
         @pinClicked="onPinClick"
         :is-selected="selected.includes(number)"
         :number="number"
       />
+    </transition-group>
+    <div class="pins">
     </div>
     <button class="btn btn-validate" @click="validateScore" v-html="$t(okMessage, { score })">{{okMessage}}</button>
   </div>
