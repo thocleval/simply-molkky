@@ -4,15 +4,15 @@
     <div class="inputs">
       <div class="input-wrapper">
         <label for="score">{{$t('player-edition.fields.score')}}</label>
-        <input type="number" id="score" name="score" v-model.lazy.number="score">
+        <input type="number" id="score" name="score" v-model.lazy.number="score" min="0">
       </div>
       <div class="input-wrapper">
         <label for="fault">{{$t('player-edition.fields.fault')}}</label>
-        <input type="number" id="fault" name="fault" v-model.lazy.number="fault">
+        <input type="number" id="fault" name="fault" v-model.lazy.number="fault" min="0">
       </div>
       <div class="checkbox-wrapper eliminated">
         <input type="checkbox" id="eliminated" name="eliminated" v-model.lazy="eliminated">
-        <label for="eliminated">{{$t('player-edition.fields.eliminated')}}</label>
+        <label for="eliminated">{{$t('player-edition.fields.eliminate')}}</label>
       </div>
     </div>
     <button class="btn btn-small" type="submit" @click="close">{{$t('modal.validate')}}</button>

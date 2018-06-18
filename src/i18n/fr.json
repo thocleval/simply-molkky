@@ -71,11 +71,11 @@
     }
   },
   "player-edition": {
-    "title": "Modifiation de <strong>{name}</strong>",
+    "title": "Modification de <strong>{name}</strong>",
     "fields": {
       "fault": "Fautes : ",
       "score": "Score : ",
-      "eliminated": "éliminé"
+      "eliminate": "éliminé"
     }
   }
 }

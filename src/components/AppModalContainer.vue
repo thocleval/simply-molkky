@@ -1,19 +1,23 @@
 <template>
-  <div class="modal-container" :class="{visible: isVisible}">
-    <div class="backdrop" @click="hide"></div>
-    <AppSimpleModal
-      :title="title"
-      :content="content"
-      @validate="hide"
-      v-if="isVisible && type === 'simple'"
-    />
-    <AppComponentModal
-      :component="component"
-      :data="componentData"
-      @close="hide"
-      v-if="isVisible && type === 'component'"
-    />
-  </div>
+  <transition name="modal-container">
+    <div class="modal-container" v-show="isVisible">
+      <div class="backdrop" @click="hide"></div>
+      <transition name="modal">
+        <AppSimpleModal
+          :title="title"
+          :content="content"
+          @validate="hide"
+          v-if="isVisible && type === 'simple'"
+        />
+        <AppComponentModal
+          :component="component"
+          :data="componentData"
+          @close="hide"
+          v-if="isVisible && type === 'component'"
+        />
+      </transition>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -38,6 +42,27 @@ export default {
 <style lang="less">
 @import '~@/style/variables';
 
+.modal-container-enter-active, .modal-container-leave-active {
+  transition: opacity @transition-duration;
+}
+.modal-container-enter, .modal-container-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active, .modal-leave-active {
+  transition: transform @transition-duration ease, opacity @transition-duration ease;
+}
+
+.modal-enter {
+  opacity: 0;
+  transform: translateY(-5rem);
+}
+
+.modal-leave-to {
+  opacity: 0;
+  transform: translateY(5rem);
+}
+
 .modal-container {
   position: fixed;
   top: 0;
@@ -46,10 +71,11 @@ export default {
   left: 0;
   z-index: 1000;
   padding: @spacing;
-  opacity: 0;
+  // opacity: 0;
   align-items: center;
   justify-content: center;
-  display: none;
+  // display: none;
+  display: flex;
 
   .backdrop {
     background-color: fade(@white, 50%);
@@ -64,7 +90,6 @@ export default {
 
   &.visible {
     opacity: 1;
-    display: flex;
   }
 }
 

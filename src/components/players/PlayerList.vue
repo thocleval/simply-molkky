@@ -1,10 +1,12 @@
 <template>
   <VueDraggable v-model="sortedPlayers" :options="{ draggable: '.player', forceFallback: true, handle: '.handle' }" class="draggable-container">
-    <div class="player" v-for="player in sortedPlayers" :key="player.id">
-      <div class="handle"><AppIcon icon="handle" /></div>
-      <p class="name">{{ player.name }}</p>
-      <span @click="removePlayer(player.id)" class="remove"><AppIcon icon="cross" /></span>
-    </div>
+    <transition-group name="players">
+      <div class="player" v-for="player in sortedPlayers" :key="player.id">
+        <div class="handle"><AppIcon icon="handle" /></div>
+        <p class="name">{{ player.name }}</p>
+        <span @click="removePlayer(player.id)" class="remove"><AppIcon icon="cross" /></span>
+      </div>
+    </transition-group>
   </VueDraggable>
 </template>
 
@@ -39,6 +41,16 @@ export default {
 <style lang="less" scoped>
 @import '~@/style/variables';
 
+.players-move,
+.players-enter-active, .players-leave-active {
+  transition: all @transition-duration;
+}
+
+.players-enter, .players-leave-to {
+  opacity: 0;
+  transform: translateX(@spacing-small);
+}
+
 .draggable-container {
   width: 100%;
 }
@@ -54,7 +66,8 @@ export default {
   position: relative;
 
   &.sortable-ghost {
-    opacity: 0;
+    opacity: 0.2;
+    border-bottom: 0;
 
     & ~ .player {
       border-top: 1px solid @dark-blue;
