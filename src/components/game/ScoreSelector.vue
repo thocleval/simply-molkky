@@ -1,13 +1,16 @@
 <template>
   <div class="score-selector">
-    <div class="pins">
+    <transition-group name="pins-transition" appear tag="div" class="pins">
       <GamePin
-        v-for="number in 12"
+        v-for="(number, index) in 12"
+        :data-index="index"
         :key="number"
         @pinClicked="onPinClick"
         :is-selected="selected.includes(number)"
         :number="number"
       />
+    </transition-group>
+    <div class="pins">
     </div>
     <button class="btn btn-validate" @click="validateScore" v-html="$t(okMessage, { score })">{{okMessage}}</button>
   </div>
@@ -64,17 +67,19 @@ export default {
 @import '~@/style/variables';
 .score-selector {
   width: 100%;
+  margin-top: .5rem;
 }
 
 .pins {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
-  grid-gap: .5rem;
+  grid-template-columns: repeat(8, minmax(1rem, 1fr));
+  grid-gap: 0 .5rem;
   max-width: 80%;
   margin: auto;
+  align-items: flex-end;
 
   .🎳 {
-    margin-top: -15%;
+    margin-top: -5%;
     width: auto;
     grid-column-end: span 2;
     grid-row-end: span 2;

@@ -9,11 +9,13 @@
     "name-placeholder": "Player name",
     "cancel": "Cancel",
     "start": "Start game",
-    "max-players": "Maximum number of players reached"
+    "max-players": "Maximum number of players reached",
+    "shuffle": "Shuffle players"
   },
   "game": {
     "scores": {
-      "title": "Scores"
+      "title": "Scores",
+      "eliminated": "Eliminated players"
     },
     "turn": "<span class=\"player-name\">{name}</span>'s turn",
     "submit": {
@@ -53,6 +55,27 @@
       "label": "Zap! If player 1 matches player 2's score :",
       "nothing": "Nothing happens",
       "half": "Player 2's score is halved"
+    }
+  },
+  "modal": {
+    "validate": "ok",
+    "sanctions": {
+      "zap": {
+        "title": "!!! Zap !!!",
+        "content": " | <strong>{players}</strong> go back to {score} points | <strong>{players}</strong> go back to {score} points"
+      },
+      "eliminated": {
+        "title": "Booooh !",
+        "content": "<strong>{name}</strong> has been eliminated"
+      }
+    }
+  },
+  "player-edition": {
+    "title": "<strong>{name}</strong> updated",
+    "fields": {
+      "fault": "Faults : ",
+      "score": "Score : ",
+      "eliminate": "eliminate"
     }
   }
 }

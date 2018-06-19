@@ -1,5 +1,5 @@
 <template>
-  <div class="🖼">
+  <div class="🖼 vertical-container">
     <h1 class="main-title">{{$t('rules.title')}}</h1>
     <div class="scroll-view">
       <div class="rule">
@@ -123,68 +123,11 @@ export default {
 
 .radio-wrapper {
   margin: 0;
-  display: block;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
   text-align: left;
   margin-top: 0.3rem;
 
-  /* Hide the browser's default radio button */
-  & input[type="radio"] {
-    display: none;
-  }
-
-  & input:checked ~ label {
-    &::before {
-      box-shadow: inset 0 0 0 .6rem;
-    }
-  }
-
-  & input:checked:hover ~ label {
-    &::before {
-      box-shadow: inset 0 0 0 .6rem;
-    }
-  }
-
-  & input:hover ~ label {
-    &::before {
-      box-shadow: inset 0 0 0 0.1rem;
-    }
-  }
-
   label {
-    cursor: pointer;
-    margin: 0;
     font-size: 1.4rem;
-    padding-left: 2.5rem;
-    position: relative;
-    display: inline-block;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0rem;
-      transform: translate(0, -50%);
-      display: inline-block;
-      vertical-align: middle;
-      height: 1rem;
-      width: 1rem;
-      border-radius: 50%;
-      border: 2px solid @dark-blue;
-      background: transparent;
-      transition: box-shadow @transition-duration ease;
-      outline: none;
-      margin-right: 1rem;
-      margin-bottom: 0.3rem;
-      box-shadow: inset 0 0 0 0;
-
-      &.disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-      }
-    }
   }
 }
 

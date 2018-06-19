@@ -1,5 +1,5 @@
 <template>
-  <div class="🖼">
+  <div class="🖼 vertical-container">
     <GameHeader :player="currentPlayer" />
     <ScoreSelector @validateScore="addScore" />
     <h2 class="medium-title">{{$t('game.scores.title')}}</h2>
@@ -35,7 +35,7 @@ export default {
     ...mapActions('game', ['addScoreToPlayer']),
     addScore(newScore) {
       this.addScoreToPlayer({
-        index: this.playerIndex,
+        id: this.currentPlayer.id,
         score: newScore,
       });
       if (this.hasWinner) {

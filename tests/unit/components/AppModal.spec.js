@@ -1,12 +1,12 @@
-import AppModal from '@/components/AppModal';
+import AppSimpleModal from '@/components/AppSimpleModal';
 
 import { mount } from '@vue/test-utils';
 
-describe('AppModal.vue', () => {
+describe('AppSimpleModal.vue', () => {
   let cmp;
 
   beforeEach(() => {
-    cmp = mount(AppModal, {
+    cmp = mount(AppSimpleModal, {
       propsData: {
         title: 'Modal title',
         content: 'This is some content with <strong>html</strong>',

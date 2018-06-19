@@ -20,18 +20,21 @@ describe('[Custom rules] Game score gestion', () => {
     state = {
       players: [
         {
+          id: 'michel',
           name: 'Michel',
           score: 20,
           fault: 0,
           isEliminated: false,
         },
         {
+          id: 'jacqueline',
           name: 'Jaqueline',
           score: 40,
           fault: 0,
           isEliminated: false,
         },
         {
+          id: 'jose',
           name: 'José',
           score: 2,
           fault: 0,
@@ -44,16 +47,19 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.sanction = reset] should reset the score after 3 faults', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.sanction = rulesTypes.SANCTION_RESET;
     state.players[index].fault = 2;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 0 },
+      { id, score: 0 },
       state, [
-        { type: SET_FAULT, payload: { index, fault: 3 } },
-        { type: RESET_PLAYER, payload: { index } },
+        { type: SET_FAULT, payload: { id, fault: 3 } },
+        { type: RESET_PLAYER, payload: { id } },
       ],
       done,
     );
@@ -61,15 +67,18 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.sanction = nothing] should do nothing after 3 faults', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.sanction = rulesTypes.SANCTION_NOTHING;
     state.players[index].fault = 2;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 0 },
+      { id, score: 0 },
       state, [
-        { type: SET_FAULT, payload: { index, fault: 3 } },
+        { type: SET_FAULT, payload: { id, fault: 3 } },
       ],
       done,
     );
@@ -77,14 +86,17 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.penaltyResetAmount = N] should reset to N when over goal', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.penaltyResetAmount = 10;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 15 },
+      { id, score: 15 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 10 } },
+        { type: SET_SCORE, payload: { id, score: 10 } },
       ],
       done,
     );
@@ -92,14 +104,17 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.penalty = substract] should substract 5 points when over goal', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.penalty = rulesTypes.PENALTY_SUBSTRACT;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 15 },
+      { id, score: 15 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 35 } },
+        { type: SET_SCORE, payload: { id, score: 35 } },
       ],
       done,
     );
@@ -107,15 +122,18 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.penalty = substract, custom amount of penalty] should substract N points when over goal', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.penalty = rulesTypes.PENALTY_SUBSTRACT;
     state.rules.penaltySubstractAmount = 20;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 15 },
+      { id, score: 15 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 20 } },
+        { type: SET_SCORE, payload: { id, score: 20 } },
       ],
       done,
     );
@@ -123,14 +141,17 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.penalty = excess] should substract excess points when over goal', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.penalty = rulesTypes.PENALTY_EXCESS;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 16 },
+      { id, score: 16 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 44 } },
+        { type: SET_SCORE, payload: { id, score: 44 } },
       ],
       done,
     );
@@ -138,14 +159,17 @@ describe('[Custom rules] Game score gestion', () => {
 
   it('[rules.winCondition = higher] shouldn\'t go back to 25 when exceed 50', (done) => {
     const index = 1;
+    const {
+      id,
+    } = state.players[index];
 
     state.rules.winCondition = rulesTypes.WIN_CONDITION_HIGHER;
 
     testAction(
       actions.addScoreToPlayer,
-      { index, score: 15 },
+      { id, score: 15 },
       state, [
-        { type: SET_SCORE, payload: { index, score: 55 } },
+        { type: SET_SCORE, payload: { id, score: 55 } },
       ],
       done,
     );
@@ -154,15 +178,17 @@ describe('[Custom rules] Game score gestion', () => {
   it('[rules.zap] should half the score of player B when player A matches his score', (done) => {
     const playerAIndex = 2;
     const playerBIndex = 0;
+    const idA = state.players[playerAIndex].id;
+    const idB = state.players[playerBIndex].id;
 
     state.rules.zap = rulesTypes.ZAP_HALF;
 
     testAction(
       actions.addScoreToPlayer,
-      { index: playerAIndex, score: 18 },
+      { id: idA, score: 18 },
       state, [
-        { type: SET_SCORE, payload: { index: playerAIndex, score: 20 } },
-        { type: SET_SCORE, payload: { index: playerBIndex, score: 10, keepFault: true } },
+        { type: SET_SCORE, payload: { id: idA, score: 20 } },
+        { type: SET_SCORE, payload: { id: idB, score: 10, keepFault: true } },
       ],
       done,
     );

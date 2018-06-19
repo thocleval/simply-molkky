@@ -1,9 +1,9 @@
 <template>
-  <div class="🖼 auto-height">
+  <div class="🖼 vertical-container auto-height">
 
     <div v-for="(player, index) in ranking" :key="index">
       <p class="ranking" :class="{ first: index === 0, second: index === 1, third: index === 2 }">
-        <span v-if="index > 2">{{ index + ". " }}</span>
+        <span v-if="index > 2">{{ (index + 1) + ". " }}</span>
         {{ player.name }}
         <span v-if="index > 0"> : {{$t('game.score', {score: player.score})}}</span>
       </p>

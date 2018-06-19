@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
   props: {
     faults: {
@@ -51,7 +49,7 @@ export default {
     margin: 0 0.2rem;
     border: 2px solid @dark-blue;
     background: transparent;
-    transition: background-color @transition-duration ease;
+    transition: background-color @transition-duration-fast ease;
 
     &.x {
       background-color: @dark-blue;

@@ -6,6 +6,8 @@ import i18n from './i18n';
 import './assets/fonts/font-icons/font-icons.font';
 import './registerServiceWorker';
 
+import './util/longPressDirective';
+
 Vue.config.productionTip = false;
 
 new Vue({

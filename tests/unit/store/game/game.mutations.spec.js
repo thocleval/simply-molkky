@@ -5,6 +5,7 @@ import {
   SET_SCORE,
   ELIMINATE_PLAYER,
   SET_FAULT,
+  SET_ELIMINATED,
   RESET_PLAYER,
 } from '@/stores/gameMutation.types';
 
@@ -19,9 +20,10 @@ describe('Game mutations', () => {
     state = {
       players: [
         {
+          id: 'id-de-test',
           name: 'Michel',
           score: 20,
-          fault: 0,
+          fault: 2,
           isEliminated: false,
         },
       ],
@@ -38,39 +40,78 @@ describe('Game mutations', () => {
   });
 
   it('should set a score', () => {
-    const index = 0;
-    mutations[SET_SCORE](state, { index, score: 45 });
+    const id = 'id-de-test';
+    mutations[SET_SCORE](state, { id, score: 45 });
 
-    expect(state.players[index].score).toEqual(45);
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.score).toEqual(45);
+    expect(player.fault).toEqual(0);
+  });
+
+  it('should set a score and keep faults', () => {
+    const id = 'id-de-test';
+    mutations[SET_SCORE](state, { id, score: 45, keepFault: true });
+
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.score).toEqual(45);
+    expect(player.fault).toEqual(2);
   });
 
   it('should add only score over 0', () => {
-    const index = 0;
-    mutations[SET_SCORE](state, { index, score: -10 });
+    const id = 'id-de-test';
+    mutations[SET_SCORE](state, { id, score: -10 });
 
-    expect(state.players[index].score).toEqual(0);
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.score).toEqual(0);
   });
 
   it('should set a fault', () => {
-    const index = 0;
-    mutations[SET_FAULT](state, { index, fault: 1 });
+    const id = 'id-de-test';
+    mutations[SET_FAULT](state, { id, fault: 1 });
 
-    expect(state.players[index].fault).toEqual(1);
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.fault).toEqual(1);
+  });
+
+  it('should add only fault over 0', () => {
+    const id = 'id-de-test';
+    mutations[SET_FAULT](state, { id, fault: -10 });
+
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.fault).toEqual(0);
+  });
+
+  it('should set eliminated', () => {
+    const id = 'id-de-test';
+    mutations[SET_ELIMINATED](state, { id, isEliminated: true });
+
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.isEliminated).toEqual(true);
   });
 
   it('should eliminate a player', () => {
-    const index = 0;
-    mutations[ELIMINATE_PLAYER](state, { index });
+    const id = 'id-de-test';
+    mutations[ELIMINATE_PLAYER](state, { id });
 
-    expect(state.players[index].score).toEqual(0);
-    expect(state.players[index].isEliminated).toEqual(true);
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.score).toEqual(0);
+    expect(player.isEliminated).toEqual(true);
   });
 
   it('should reset a player', () => {
-    const index = 0;
-    mutations[RESET_PLAYER](state, { index });
+    const id = 'id-de-test';
+    mutations[RESET_PLAYER](state, { id });
 
-    expect(state.players[index].score).toEqual(0);
-    expect(state.players[index].fault).toEqual(0);
+    const player = state.players.find(p => p.id === id);
+
+    expect(player.score).toEqual(0);
+    expect(player.fault).toEqual(0);
   });
 });
