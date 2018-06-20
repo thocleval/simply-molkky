@@ -13,7 +13,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --coverage",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "coverage:upload": "vue-cli-service test:unit --coverage --coverageReporters=text-lcov | coveralls"
   },
   "dependencies": {
     "register-service-worker": "^1.0.0",
