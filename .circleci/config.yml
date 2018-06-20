@@ -3,13 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
-<<<<<<< HEAD
-=======
-general:
-  branches:
-    only:
-      - master
->>>>>>> ac7a2028d72075c244445624450401a0245906f0
 jobs:
   build:
     docker:
