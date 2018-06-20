@@ -43,5 +43,7 @@ jobs:
       - run:
           name: Unit tests
           command: yarn test:unit
-      - store_test_results:
+      - store_artifacts:
           path: tests/coverage
+      - store_test_results:
+          path: tests/coverage/unit/clover.xml
