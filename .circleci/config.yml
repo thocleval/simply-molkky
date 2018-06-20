@@ -44,4 +44,4 @@ jobs:
           name: Unit tests
           command: yarn test:unit
       - store_test_results:
-          path: tests/coverage/
+          path: tests/coverage
