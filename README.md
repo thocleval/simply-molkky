@@ -7,9 +7,7 @@ This App is also a good project to learn Vue.js on a real life problem.
 
 ## Build status
 
-[![Build Status](https://travis-ci.org/coming-soon/coming-soon.svg?branch=master)](https://travis-ci.org/coming-soon/coming-soon)
-
-> Coming soon :)
+[![circle-status](https://circleci.com/gh/thocleval/simply-molkky.png?style=shield&circle-token=:circle-token)](https://circleci.com/gh/thocleval/simply-molkky)
 
 ## Code style
 
