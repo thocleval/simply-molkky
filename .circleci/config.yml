@@ -42,7 +42,7 @@ jobs:
           command: yarn lint
       - run:
           name: Unit tests
-          command: yarn test:unit"
+          command: yarn test:unit
       - store_artifacts:
           path: reports
       - store_test_results:
