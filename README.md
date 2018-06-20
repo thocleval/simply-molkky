@@ -60,6 +60,8 @@ yarn serve
 Unit tests and e2e tests can be run :
 
 ``` bash
+# run lint
+yarn lint
 # run unit tests
 yarn test:unit
 # run end to end tests
