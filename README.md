@@ -19,10 +19,6 @@ This App is also a good project to learn Vue.js on a real life problem.
 [![vue-style](https://img.shields.io/badge/code%20style-Vue.js-4B32C3.svg?style=flat)](https://vuejs.org/v2/style-guide/)
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
 
-## Screenshots
-
-> Coming soon :)
-
 ## Tech/framework used
 Simply Mölkky is built with [Vue.js](https://vuejs.org/v2).
 
