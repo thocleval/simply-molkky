@@ -5,7 +5,10 @@ module.exports = {
     'json',
     'vue',
   ],
-  coverageDirectory: '<rootDir>/tests/coverage/unit',
+  reporters: [
+    ['jest-junit', { output: './reports/junit/js-test-results.xml' }],
+  ],
+  coverageDirectory: '<rootDir>/reports/coverage/unit',
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
     '!src/assets/**',

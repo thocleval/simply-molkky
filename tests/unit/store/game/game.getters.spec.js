@@ -58,7 +58,8 @@ describe('Game mutations', () => {
 
   it('should count remaining players', () => {
     state.players[2].isEliminated = true;
-    const remainingPlayers = getters.remainingPlayers(state);
+    const ranking = getters.ranking(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(remainingPlayers).toEqual(3);
   });
@@ -67,14 +68,14 @@ describe('Game mutations', () => {
     state.players = [];
 
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(false);
   });
 
   it('shouldn\'t have a winner when nobody reach goal', () => {
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(false);
   });
@@ -84,7 +85,7 @@ describe('Game mutations', () => {
     state.players[winnerIndex].score = state.rules.goal;
 
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
     expect(ranking[0]).toEqual(state.players[winnerIndex]);
@@ -96,7 +97,7 @@ describe('Game mutations', () => {
     state.players[winnerIndex].score = state.rules.goal + 10;
 
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
     expect(ranking[0]).toEqual(state.players[winnerIndex]);
@@ -108,7 +109,7 @@ describe('Game mutations', () => {
     state.players[winnerIndex].score = 60;
 
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
     expect(ranking[0]).toEqual(state.players[winnerIndex]);
@@ -120,7 +121,7 @@ describe('Game mutations', () => {
     state.players[winnerIndex].score = state.rules.goal;
 
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(false);
   });
@@ -135,7 +136,7 @@ describe('Game mutations', () => {
     state.players[3].score = 0;
 
     const ranking = getters.ranking(state);
-    const remainingPlayers = getters.remainingPlayers(state);
+    const remainingPlayers = getters.remainingPlayers(state, { ranking });
 
     expect(getters.hasWinner(state, { ranking, remainingPlayers })).toEqual(true);
     expect(ranking[0]).toEqual(state.players[winnerIndex]);
