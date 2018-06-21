@@ -1,9 +1,18 @@
+<p align="center">
+  <img src="readme-logo.png" alt="Logo Simply Mölkky"/>
+</p>
+
 # Simply Mölkky
 Simply Mölkky is an app to keep track of scores in a game of **Mölkky**.
+
+<p align="center">
+  <img src="readme-demo.gif" alt="Simply Mölkky demo"/>
+</p>
 
 ## Motivation
 It's really hard to calculate Mölkky scores in your head and to keep track of all scores. This App is here to help your Mölkky player's life.
 This App is also a good project to learn Vue.js on a real life problem.
+
 
 ## Build status
 
