@@ -34,3 +34,61 @@ jobs:
           path: reports
       - store_test_results:
           path: reports
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11
+
+    working_directory: ~/simply-molkky
+
+    steps:
+      - checkout
+
+      - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Lint
+          command: yarn lint
+      - run:
+          name: Unit tests
+          command: yarn test:unit
+      - run:
+          name: Send coverage to Coveralls
+          command: yarn coverage:upload
+      - store_artifacts:
+          path: reports
+      - store_test_results:
+          path: reports
+
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: deployment-automation
