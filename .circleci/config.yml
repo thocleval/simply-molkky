@@ -19,7 +19,7 @@ jobs:
           paths:
             - node_modules
 
-  lint_test:
+  lint:
     docker:
       - image: circleci/node:8.11
     working_directory: ~/simply-molkky
@@ -78,14 +78,14 @@ jobs:
       - run: sudo apt-get install rsync
       - run:
           name: Deploy build to server
-          command: rsync -avc $BUILD_DIR -e ssh $SSH_USER@$SSH_HOST:~/simply-molkky-deploy/
+          command: rsync -avc $BUILD_DIR -e ssh $SSH_USER@$SSH_HOST:$SSH_DEST_PATH
 
 workflows:
   version: 2
-  build-deploy:
+  tests-deploy:
     jobs:
       - checkout_code
-      - lint_test:
+      - lint:
           requires:
             - checkout_code
       - unit_test:
@@ -93,8 +93,8 @@ workflows:
             - checkout_code
       - deploy:
           requires:
-            - lint_test
+            - lint
             - unit_test
           filters:
             branches:
-              only: deployment-automation
+              only: master
