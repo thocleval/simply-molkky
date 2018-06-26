@@ -61,7 +61,7 @@ jobs:
       - image: circleci/node:8.11
     working_directory: ~/simply-molkky
     environment:
-      BUILD_DIR: dist
+      BUILD_DIR: dist/
     steps:
       - checkout
       - add_ssh_keys:
@@ -78,7 +78,7 @@ jobs:
       - run: sudo apt-get install rsync
       - run:
           name: Deploy build to server
-          command: rsync -avce ssh $BUILD_DIR $SSH_USER@$SSH_HOST:/home/www/simply-molkky-deploy
+          command: rsync -avc $BUILD_DIR -e ssh $SSH_USER@$SSH_HOST:/home/www/simply-molkky-deploy/
 
 workflows:
   version: 2
