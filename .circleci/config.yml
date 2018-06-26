@@ -10,15 +10,6 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/simply-molkky
-
-  install_dependencies:
-    docker:
-      - image: circleci/node:8.11
-    working_directory: ~/simply-molkky
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -84,6 +75,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
+      - run: sudo apt-get install rsync
       - run:
           name: Deploy build to server
           command: rsync -avce ssh $BUILD_DIR $SSH_USER@$SSH_HOST:/home/www/simply-molkky-deploy
@@ -93,15 +85,12 @@ workflows:
   build-deploy:
     jobs:
       - checkout_code
-      - install_dependencies:
-          requires:
-            - checkout_code
       - lint_test:
           requires:
-            - install_dependencies
+            - checkout_code
       - unit_test:
           requires:
-            - install_dependencies
+            - checkout_code
       - deploy:
           requires:
             - lint_test
