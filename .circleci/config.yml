@@ -78,7 +78,7 @@ jobs:
       - run: sudo apt-get install rsync
       - run:
           name: Deploy build to server
-          command: rsync -avc $BUILD_DIR -e ssh $SSH_USER@$SSH_HOST:/home/www/simply-molkky-deploy/
+          command: rsync -avc $BUILD_DIR -e ssh $SSH_USER@$SSH_HOST:~/simply-molkky-deploy/
 
 workflows:
   version: 2
