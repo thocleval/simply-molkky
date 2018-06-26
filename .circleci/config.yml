@@ -77,6 +77,12 @@ jobs:
           fingerprints:
             - "87:1e:c3:53:ca:fe:b3:f4:93:29:1b:db:43:bb:0a:78"
       - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
       - run:
           name: Deploy build to server
