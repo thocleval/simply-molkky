@@ -67,7 +67,7 @@ jobs:
 
   deploy:
     docker:
-      - image: buildpack-deps:trusty
+      - image: circleci/node:8.11
     working_directory: ~/simply-molkky
     environment:
       BUILD_DIR: ~/simply-molkky/dist
