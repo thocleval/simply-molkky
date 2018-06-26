@@ -61,7 +61,7 @@ jobs:
       - image: circleci/node:8.11
     working_directory: ~/simply-molkky
     environment:
-      BUILD_DIR: ~/simply-molkky/dist
+      BUILD_DIR: dist
     steps:
       - checkout
       - add_ssh_keys:
