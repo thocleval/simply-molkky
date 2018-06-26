@@ -1,26 +1,85 @@
 version: 2
 jobs:
+  checkout_code:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/simply-molkky
+
+  bundle_dependencies:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+  lint_test:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Lint test
+          command: yarn lint
+
+  unit_test:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Unit tests
+          command: yarn test:unit
+      - run:
+          name: Send coverage to Coveralls
+          command: yarn coverage:upload
+      - store_artifacts:
+          path: reports
+      - store_test_results:
+          path: reports
+
   build:
     docker:
       - image: circleci/node:8.11
-
     working_directory: ~/simply-molkky
-
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-
       - run: yarn install
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - run:
           name: Lint
           command: yarn lint
@@ -49,10 +108,20 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
+      - checkout_code
+      - bundle_dependencies:
+          requires:
+            - checkout_code
+      - lint_test:
+          requires:
+            - bundle_dependencies
+      - unit_test:
+          requires:
+            - bundle_dependencies
       - deploy:
           requires:
-            - build
+            - lint_test
+            - unit_test
           filters:
             branches:
-              only: deployment-automation
+              only: master
