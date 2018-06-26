@@ -2,10 +2,11 @@
   "name": "simply-molkky",
   "version": "0.1.0",
   "description": "Une application permettant compter les points au Mölkky",
-  "author": "Clément Chaumel (https://github.com/ClementChaumel)",
+  "author": "ThoCléVal (https://github.com/thocleval)",
   "contributors": [
     "Clément Chaumel (https://github.com/ClementChaumel)",
-    "Valentin Chevalier (https://github.com/valentinchevalier)"
+    "Valentin Chevalier (https://github.com/valentinchevalier)",
+    "Thomas Bille (https://github.com/tbille)"
   ],
   "private": true,
   "scripts": {
