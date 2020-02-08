@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ScoreSelector from '@/components/game/ScoreSelector';
 import GameHeader from '@/components/game/GameHeader';
 import GameRanking from '@/components/game/GameRanking';
@@ -19,20 +19,11 @@ export default {
     GameRanking,
     GameHeader,
   },
-  data() {
-    return {
-      playerIndex: 0,
-    };
-  },
   computed: {
-    ...mapState('game', ['rules', 'players']),
-    ...mapGetters('game', ['remainingPlayers', 'hasWinner']),
-    currentPlayer() {
-      return this.players[this.playerIndex];
-    },
+    ...mapGetters('game', ['hasWinner', 'currentPlayer']),
   },
   methods: {
-    ...mapActions('game', ['addScoreToPlayer']),
+    ...mapActions('game', ['addScoreToPlayer', 'turnToNextPlayer']),
     addScore(newScore) {
       this.addScoreToPlayer({
         id: this.currentPlayer.id,
@@ -45,10 +36,7 @@ export default {
       this.nextPlayer();
     },
     nextPlayer() {
-      this.playerIndex = (this.playerIndex + 1) % this.players.length;
-      while (this.currentPlayer.isEliminated) {
-        this.playerIndex = (this.playerIndex + 1) % this.players.length;
-      }
+      this.turnToNextPlayer();
     },
   },
 };

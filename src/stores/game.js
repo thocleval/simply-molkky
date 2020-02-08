@@ -14,6 +14,7 @@ import {
   SET_FAULT,
   RESET_PLAYER,
   SET_ELIMINATED,
+  SET_CURRENT_PLAYER,
 } from './gameMutation.types';
 
 export const PLAYERS_LIMIT = 16;
@@ -24,6 +25,7 @@ export default {
     return {
       players: [],
       rules: Object.assign({}, defaultRules),
+      currentPlayerIndex: 0,
     };
   },
   getters: {
@@ -56,6 +58,7 @@ export default {
           return false;
       }
     },
+    currentPlayer: ({ players, currentPlayerIndex }) => players[currentPlayerIndex],
   },
   mutations: {
     [SET_RULES](state, rules) {
@@ -135,6 +138,9 @@ export default {
       currentPlayer.score = 0;
       currentPlayer.fault = 0;
     },
+    [SET_CURRENT_PLAYER](state, index) {
+      state.currentPlayerIndex = index;
+    },
   },
   actions: {
     setRules({ commit }, rules) {
@@ -158,6 +164,7 @@ export default {
     },
     resetAllScores({ commit }) {
       commit(RESET_ALL_SCORES);
+      commit(SET_CURRENT_PLAYER, 0);
     },
     addScoreToPlayer({ dispatch, commit, state }, { id, score }) {
       const currentPlayer = state.players.find(player => player.id === id);
@@ -222,6 +229,15 @@ export default {
           break;
         default:
       }
+    },
+    turnToNextPlayer({ commit, state }) {
+      let nextPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
+
+      while (state.players[nextPlayerIndex].isEliminated) {
+        nextPlayerIndex = (nextPlayerIndex + 1) % state.players.length;
+      }
+
+      commit(SET_CURRENT_PLAYER, nextPlayerIndex);
     },
   },
 };
