@@ -132,10 +132,11 @@ body {
     transition: transform @transition-duration-fast ease;
   }
 
-  &:hover,
-  &:focus {
-    &:before {
-      transform: scale(1);
+  @media (hover: hover) {
+    &:hover {
+      &:before {
+        transform: scale(1);
+      }
     }
   }
 
