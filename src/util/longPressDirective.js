@@ -9,10 +9,12 @@ Vue.directive('long-press', {
     vnode.onmouseup = () => {
       clearTimeout(vnode.timeout);
       document.removeEventListener('mouseup', vnode.onmouseup);
+      document.removeEventListener('touchend', vnode.onmouseup);
     };
 
     vnode.onmousedown = () => {
       document.addEventListener('mouseup', vnode.onmouseup);
+      document.addEventListener('touchend', vnode.onmouseup);
 
       vnode.timeout = setTimeout(() => {
         const longPressEvent = new Event('long-press');
@@ -22,10 +24,13 @@ Vue.directive('long-press', {
     };
 
     el.addEventListener('mousedown', vnode.onmousedown);
+    el.addEventListener('touchstart', vnode.onmousedown);
   },
   unbind(el, binding, vnode) {
     clearTimeout(vnode.timeout);
     el.removeEventListener('mousedown', vnode.onmousedown);
+    el.removeEventListener('touchstart', vnode.onmousedown);
     document.removeEventListener('mouseup', vnode.onmouseup);
+    document.removeEventListener('touchend', vnode.onmouseup);
   },
 });
