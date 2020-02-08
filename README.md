@@ -1,9 +1,13 @@
+![Logo Simply Mölkky](readme-logo.png)
+
 # Simply Mölkky
 
 [![CI Status](https://circleci.com/gh/thocleval/simply-molkky.png?style=shield&circle-token=:circle-token)](https://circleci.com/gh/thocleval/simply-molkky)
 [![Coverage Status](https://coveralls.io/repos/github/thocleval/simply-molkky/badge.svg)](https://coveralls.io/github/thocleval/simply-molkky)
 
 Simply Mölkky is an app to keep track of scores in a game of **Mölkky**.
+
+[![Logo Simply Mölkky](readme-demo.gif)](https://simply-molkky.com)
 
 ## Motivation
 It's really hard to calculate Mölkky scores in your head and to keep track of all scores. This App is here to help your Mölkky player's life.
@@ -13,10 +17,6 @@ This App is also a good project to learn Vue.js on a real life problem.
 
 [![vue-style](https://img.shields.io/badge/code%20style-Vue.js-4B32C3.svg?style=flat)](https://vuejs.org/v2/style-guide/)
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
-
-## Screenshots
-
-> Coming soon :)
 
 ## Tech/framework used
 Simply Mölkky is built with [Vue.js](https://vuejs.org/v2).
