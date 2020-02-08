@@ -13,8 +13,8 @@ const messages = {
   fr,
 };
 
-Vue.config.languages = ['en', 'fr'];
-const currentLocale = VueCookie.get('locale') || 'en';
+Vue.config.languages = ['fr', 'en'];
+const currentLocale = VueCookie.get('locale') || 'fr';
 
 const i18n = new VueI18n({
   locale: currentLocale,
