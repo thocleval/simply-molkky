@@ -1,17 +1,10 @@
-// const GoogleFontsPlugin = require('google-fonts-webpack-plugin');
-
 module.exports = {
   pwa: {
     start_url: '/',
   },
   configureWebpack: {
     plugins: [
-      // new GoogleFontsPlugin({
-      //   fonts: [
-      //     { family: 'Montserrat', variants: ['300', '400', '500', '700', '900'] },
-      //     { family: 'Work Sans', variants: ['300', '400', '500', '700', '900'] },
-      //   ],
-      // }),
+
     ],
   },
   chainWebpack: (config) => {
