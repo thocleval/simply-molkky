@@ -2,7 +2,7 @@
 
 module.exports = {
   pwa: {
-
+    start_url: '/',
   },
   configureWebpack: {
     plugins: [

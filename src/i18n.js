@@ -9,8 +9,8 @@ Vue.use(VueI18n);
 Vue.use(VueCookie);
 
 const messages = {
-  en,
   fr,
+  en,
 };
 
 Vue.config.languages = ['fr', 'en'];

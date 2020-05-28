@@ -43,6 +43,7 @@
     "jest-junit": "^5.1.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "preload-webpack-plugin": "^2.3.0",
     "style-loader": "^0.21.0",
     "vue-template-compiler": "^2.5.16",
     "webfonts-loader": "^4.1.0"
