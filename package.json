@@ -2,21 +2,25 @@
   "name": "simply-molkky",
   "version": "0.1.0",
   "description": "Une application permettant compter les points au Mölkky",
-  "author": "Clément Chaumel (https://github.com/ClementChaumel)",
+  "author": "ThoCléVal (https://github.com/thocleval)",
   "contributors": [
     "Clément Chaumel (https://github.com/ClementChaumel)",
-    "Valentin Chevalier (https://github.com/valentinchevalier)"
+    "Valentin Chevalier (https://github.com/valentinchevalier)",
+    "Thomas Bille (https://github.com/tbille)"
   ],
   "private": true,
   "scripts": {
+    "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit --coverage",
     "test:e2e": "vue-cli-service test:e2e",
-    "coverage:upload": "cat ./reports/coverage/unit/lcov.info | coveralls"
+    "coverage:upload": "cat ./reports/coverage/unit/lcov.info | coveralls",
+    "postinstall": "vue-cli-service build"
   },
   "dependencies": {
+    "express": "^4.16.3",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-cookie": "^1.1.4",

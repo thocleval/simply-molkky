@@ -1,29 +1,50 @@
 version: 2
 jobs:
-  build:
+  checkout_code:
     docker:
       - image: circleci/node:8.11
-
     working_directory: ~/simply-molkky
-
     steps:
       - checkout
-
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/simply-molkky
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-
+            - v1-dependencies-{{ checksum "package.json" }}
       - run: yarn install
-
       - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
 
+  lint:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Lint
+          name: Lint test
           command: yarn lint
+
+  unit_test:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Unit tests
           command: yarn test:unit
@@ -34,3 +55,46 @@ jobs:
           path: reports
       - store_test_results:
           path: reports
+
+  deploy:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/simply-molkky
+    environment:
+      BUILD_DIR: dist/
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "87:1e:c3:53:ca:fe:b3:f4:93:29:1b:db:43:bb:0a:78"
+      - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn build
+      - run: sudo apt-get install rsync
+      - run:
+          name: Deploy build to server
+          command: rsync -avc $BUILD_DIR -e ssh $SSH_USER@$SSH_HOST:$SSH_DEST_PATH
+
+workflows:
+  version: 2
+  tests-deploy:
+    jobs:
+      - checkout_code
+      - lint:
+          requires:
+            - checkout_code
+      - unit_test:
+          requires:
+            - checkout_code
+      - deploy:
+          requires:
+            - lint
+            - unit_test
+          filters:
+            branches:
+              only: master
